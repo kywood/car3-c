@@ -1,6 +1,72 @@
+
+# ==========================================
+# Python AI Harness
+# ==========================================
+
+# Virtual Environment (uv)
 .venv/
-.env
+venv/
+env/
+.python-version
+
+# Python Cache
 __pycache__/
-*.pyc
-.idea/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# Python Build
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# AI Harness Runtime
 reports/
+logs/
+screenshots/
+*.log
+*.pid
+*.tmp
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS / WSL
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# Jupyter
+.ipynb_checkpoints/
