@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ddc54fc6e24b840b2a43523aac9cec, type: 3}
+  m_Name: TrackSettings
+  m_EditorClassIdentifier: Car3C::Car3C.Gameplay.TrackSettings
+  _laneCount: 5
+  _laneWidth: 3.5
+  _initialLane: 2

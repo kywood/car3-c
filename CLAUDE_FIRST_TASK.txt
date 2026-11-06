@@ -1,0 +1,10 @@
+Unity 프로젝트 `D:\project\wood\unity\car3-c`에서 작업한다.
+
+1. 제공된 CLAUDE.md와 docs/CODING_CONVENTIONS.md를 먼저 읽어라.
+2. 자체 서버 및 MS2 네트워크/패킷 코드 포팅은 금지한다. 첫 MVP는 싱글플레이로 구현하고 향후 Photon Fusion을 사용한다.
+3. 설치된 `unity@unity-agent-plugin`을 확인하고 실제 사용 가능한 Unity Skill을 찾아 내용을 읽어라. 무엇을 읽었는지 보고하라.
+4. Unity 프로젝트 경로와 ProjectSettings/ProjectVersion.txt를 확인하고 Unity CLI와 Editor 통신을 검증하라. 명령어는 CLI 도움말에서 확인하라.
+5. Git 상태를 확인한 다음, 최초 MVP인 '5차선 도로 + 임시 차량 + 추적 카메라'를 독자적인 에셋으로 구현하라.
+6. 코드는 기존 MS2의 설계 철학을 따르되 신규 컨벤션 및 Unity 6에 맞게 작성하라.
+7. 가능한 경우 컴파일, PlayMode, Console 오류까지 검증하고 명령/결과를 한국어로 보고하라.
+8. 실제 연결이 안 되거나 검증 불가능하면 성공했다고 말하지 말고, 정확한 오류와 다음 조치를 제시하라.

@@ -1,0 +1,77 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+
+.utmp/
+
+# Unity / IDE generated project files
+*.csproj
+*.sln
+*.slnx
+*.unityproj
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+.gradle/
+
+# Unity generated crash/debug output
+sysinfo.txt
+*.stackdump
+
+# Python Harness / virtual environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Harness runtime state and reports
+harness/*.sqlite3
+harness/*.sqlite3-*
+harness/*.db
+harness/*.db-*
+harness/logs/
+harness/screenshots/
+harness/reports/
+harness/runtime/
+
+# Secrets / tokens (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IMPORTANT: keep Assets/**/*.meta and Packages/ProjectSettings tracked
