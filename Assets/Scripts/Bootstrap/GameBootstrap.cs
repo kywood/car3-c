@@ -72,7 +72,7 @@ namespace Car3C.Bootstrap
             _environment = new EnvironmentController();
             var nightLights = new List<NightLight>(_scenery.NightLights);
             nightLights.AddRange(_traffic.NightLights);
-            _environmentView.Initialize(_environment, _simulation.Speed, _scenery.Tunnels, nightLights);
+            _environmentView.Initialize(_environment, _simulation.Speed, _scenery.Tunnels, nightLights, _road.transform);
             _environmentButtons.Initialize(_environment);
 
             if (_playerWheels != null) _vehicle.WheelsRolled += _playerWheels.Spin;
