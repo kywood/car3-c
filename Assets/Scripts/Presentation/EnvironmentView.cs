@@ -66,13 +66,18 @@ namespace Car3C.Presentation
         private bool _insideTunnel;
 
         public void Initialize(EnvironmentController environment, SpeedController speed, TunnelSchedule tunnels,
-            IReadOnlyList<NightLight> nightLights)
+            IReadOnlyList<NightLight> nightLights, Transform tunnelFloorRoot = null)
         {
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
             _speed = speed ?? throw new ArgumentNullException(nameof(speed));
             _tunnels = tunnels;
             _nightLights = nightLights ?? Array.Empty<NightLight>();
-            if (_surfaces != null) _surfaces.Collect();
+            if (_surfaces != null)
+            {
+                _surfaces.SetTunnelFloor(tunnels, tunnelFloorRoot);
+                _surfaces.Collect();
+                _surfaces.UpdateTunnelFloor(_speed.Distance);
+            }
             _environment.Changed += Apply;
             Apply();
         }
@@ -92,6 +97,8 @@ namespace Car3C.Presentation
                 _insideTunnel = inside;
                 UpdateEffects();
             }
+
+            if (_surfaces != null) _surfaces.UpdateTunnelFloor(_speed.Distance);
 
             float speed = _speed.CurrentSpeed;
             for (int i = 0; i < _effects.Length; ++i)
