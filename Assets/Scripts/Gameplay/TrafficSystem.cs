@@ -123,7 +123,7 @@ namespace Car3C.Gameplay
                 bool overlaps = Math.Abs(dz) < hitLength && dx < hitWidth;
                 if (!car.IsHit && overlaps && playerHeight >= _config.JumpClearHeight)
                 {
-                    car.IsNearMissArmed = true;
+                    if (dz > 0f && playerSpeed > car.Speed) car.IsNearMissArmed = true;
                 }
                 else if (!car.IsHit && overlaps)
                 {
@@ -136,7 +136,9 @@ namespace Car3C.Gameplay
                         for (int l = 0; l < _listeners.Count; ++l) _listeners[l].OnCollision(car);
                     }
                 }
-                else if (!car.IsHit && Math.Abs(dz) < nearMissLength && dx <= _config.NearMissLateralDistance)
+                // Only arm after closing in directly behind the car, before dodging sideways.
+                else if (!car.IsHit && dz >= hitLength && dz < nearMissLength
+                    && dx < hitWidth && dx <= _config.NearMissLateralDistance && playerSpeed > car.Speed)
                 {
                     car.IsNearMissArmed = true;
                 }

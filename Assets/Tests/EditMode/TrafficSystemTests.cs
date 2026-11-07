@@ -66,7 +66,7 @@ namespace Car3C.Tests.EditMode
         }
 
         [Test]
-        public void AdjacentLane_PassingClose_IsNearMiss()
+        public void AdjacentLane_PassingClose_IsNotNearMiss()
         {
             RecordingListener listener = new RecordingListener();
             TrafficSystem traffic = CreateManual(listener);
@@ -74,8 +74,53 @@ namespace Car3C.Tests.EditMode
 
             Drive(traffic, 22f, 0f, 0f, false, 5f);
 
+            Assert.AreEqual(0, listener.NearMisses);
+            Assert.AreEqual(0, listener.Collisions);
+        }
+
+        [TestCase(0f)]
+        [TestCase(6f)]
+        public void ApproachingDirectlyBehind_ThenDodging_IsNearMissOnce(float playerZ)
+        {
+            RecordingListener listener = new RecordingListener();
+            TrafficSystem traffic = CreateManual(listener);
+            TrafficCar car = traffic.SpawnCar(2, playerZ + 5f);
+
+            traffic.Tick(0.02f, 22f, 0d, 0f, playerZ, false);
+
+            Assert.IsTrue(car.IsNearMissArmed);
+            Assert.AreEqual(0, listener.NearMisses);
+            Drive(traffic, 22f, Layout.GetLaneCenter(1), playerZ, false, 5f);
+
             Assert.AreEqual(1, listener.NearMisses);
             Assert.AreEqual(0, listener.Collisions);
+        }
+
+        [TestCase(0f)]
+        [TestCase(-4f)]
+        public void MovingCloseOnlyAlongsideOrAhead_IsNotNearMiss(float carZ)
+        {
+            RecordingListener listener = new RecordingListener();
+            TrafficSystem traffic = CreateManual(listener);
+            traffic.SpawnCar(3, carZ);
+
+            Drive(traffic, 22f, 0f, 0f, false, 5f);
+
+            Assert.AreEqual(0, listener.NearMisses);
+            Assert.AreEqual(0, listener.Collisions);
+        }
+
+        [TestCase(12f)]
+        [TestCase(10f)]
+        public void DirectlyBehind_WithoutClosing_DoesNotArmNearMiss(float playerSpeed)
+        {
+            RecordingListener listener = new RecordingListener();
+            TrafficSystem traffic = CreateManual(listener);
+            TrafficCar car = traffic.SpawnCar(2, 4.5f);
+
+            traffic.Tick(0.02f, playerSpeed, 0d, 0f, 0f, false);
+
+            Assert.IsFalse(car.IsNearMissArmed);
         }
 
         [Test]
