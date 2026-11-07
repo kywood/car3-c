@@ -7,6 +7,7 @@ from core.todo_manager import TodoManager
 from core.coding_agent import CodingAgent
 from core.validator import UnityValidator
 from core.review_manager import ReviewManager
+from core.git_manager import GitManager
 
 from slack_reporter import (
     send_message,
@@ -20,48 +21,39 @@ BASE_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = BASE_DIR.parent
 
 REPORT_INTERVAL = 300
-CODEX_TIMEOUT = 900
+CLAUDE_TIMEOUT = 900
 BUILD_TIMEOUT = 1200
 MAX_RETRIES = 3
 REVIEW_POLL_INTERVAL = 5
 
-EXPECTED_BRANCH = "fix/near-miss-detection"
 
-
-def current_branch() -> str:
-    result = subprocess.run(
-        ["git", "branch", "--show-current"],
-        cwd=PROJECT_DIR,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return result.stdout.strip()
+def notify(message: str):
+    print(message, flush=True)
+    try:
+        send_message(message)
+    except Exception as e:
+        print(f"Slack 보고 오류: {e}", flush=True)
 
 
 def report_screenshot(message: str):
     try:
-        image_path = capture_screen()
-        send_screenshot(image_path, message)
+        path = capture_screen()
+        send_screenshot(path, message)
     except Exception as e:
-        print(f"스크린샷 실패: {e}", flush=True)
+        print(f"스크린샷 오류: {e}", flush=True)
 
 
 def report_progress(task: str, elapsed: int):
-    send_message(
-        f"🔄 Claude Code 작업 진행 중\n"
-        f"TODO: {task[:500]}\n"
+    notify(
+        f"🔄 Claude Code 작업 중\n"
+        f"TODO: {task[:400]}\n"
         f"경과 시간: {elapsed // 60}분"
     )
-
-    report_screenshot(
-        f"📸 Unity Harness 진행 화면\n"
-        f"TODO: {task[:500]}"
-    )
+    report_screenshot(f"📸 작업 진행: {task[:400]}")
 
 
 def wait_for_review(review: ReviewManager, task: str) -> str:
-    print("Slack 사용자 승인 대기...", flush=True)
+    print("Slack 승인 대기...", flush=True)
 
     while True:
         status = review.get_status(task)
@@ -80,41 +72,39 @@ def make_prompt(task: str, error_log: str | None) -> str:
         return task
 
     return (
-        f"원래 TODO:\n{task}\n\n"
-        "Unity Android 빌드가 실패했다.\n"
-        "기존 변경 사항을 유지하면서 빌드 오류만 수정하라.\n"
+        f"원래 TODO: {task}\n\n"
+        "이전 Unity 빌드가 실패했다.\n"
+        "기능 요구사항을 유지하면서 오류를 수정하라.\n"
         "CLAUDE.md 지침을 준수하라.\n"
-        "Git 브랜치 변경, Commit, Push는 하지 마라.\n\n"
-        f"빌드 오류:\n{error_log[-6000:]}"
+        "Git 브랜치 변경, 커밋, Push는 하지 마라.\n\n"
+        f"Unity 빌드 오류:\n{error_log[-6000:]}"
     )
 
 
-def execute_task(task: str, review: ReviewManager) -> bool:
+def run_development(task: str, review: ReviewManager) -> bool:
+    """Claude 개발 → Unity 빌드 → Slack 승인."""
+
     status = review.get_status(task)
 
+    # 재시작 시 이미 승인된 작업 복구
     if status == "approved":
-        print("기존 승인 결과 확인", flush=True)
         return True
 
-    if status == "pending":
-        print("기존 Slack 승인 요청 대기", flush=True)
-
-    elif status == "rejected":
-        send_message(
-            f"⛔ 이전에 거절된 TODO\n"
-            f"작업: {task}\n"
-            "재작업 지시가 필요합니다."
+    if status == "rejected":
+        notify(
+            f"⛔ 이전에 거절된 작업\n"
+            f"TODO: {task}\n"
+            "사용자 재작업 지시 필요"
         )
         return False
 
-    else:
+    if status != "pending":
         agent = CodingAgent(PROJECT_DIR)
         validator = UnityValidator(PROJECT_DIR)
-
         error_log = None
 
         for attempt in range(1, MAX_RETRIES + 1):
-            send_message(
+            notify(
                 f"🤖 Claude Code 개발 시작\n"
                 f"TODO: {task}\n"
                 f"시도: {attempt}/{MAX_RETRIES}"
@@ -123,38 +113,31 @@ def execute_task(task: str, review: ReviewManager) -> bool:
             try:
                 result = agent.execute(
                     make_prompt(task, error_log),
-                    timeout=CODEX_TIMEOUT,
+                    timeout=CLAUDE_TIMEOUT,
                     on_progress=report_progress,
                     report_interval=REPORT_INTERVAL,
                 )
             except Exception as e:
-                print(f"Claude 실행 오류: {e}", flush=True)
-                send_message(
-                    f"❌ Claude Code 실행 오류\n"
-                    f"{str(e)[:500]}"
-                )
+                notify(f"❌ Claude 실행 오류: {str(e)[:500]}")
                 return False
 
-            print(f"Claude Code 상태: {result.status}")
-            print(f"로그: {result.log_path}")
-
             if result.status == "usage_limit":
-                send_message(
-                    f"⏸️ Claude Code 사용량 제한\n"
+                notify(
+                    f"⏸️ Claude 사용량 제한\n"
                     f"TODO: {task}\n"
-                    "작업을 중단합니다."
+                    "작업을 안전하게 중단합니다."
                 )
                 return False
 
             if result.status != "success":
-                send_message(
-                    f"❌ Claude Code 작업 실패\n"
+                notify(
+                    f"❌ Claude 실행 실패\n"
                     f"TODO: {task}\n"
                     f"상태: {result.status}"
                 )
                 return False
 
-            send_message(
+            notify(
                 f"🔨 Unity Android 빌드 시작\n"
                 f"TODO: {task}"
             )
@@ -164,126 +147,173 @@ def execute_task(task: str, review: ReviewManager) -> bool:
                     timeout=BUILD_TIMEOUT
                 )
             except Exception as e:
-                send_message(
-                    f"❌ Unity 빌드 실행 오류\n"
-                    f"{str(e)[:500]}"
+                notify(
+                    f"❌ Unity Validator 오류: {str(e)[:500]}"
                 )
                 return False
 
             if validation.success:
-                print("Unity 빌드 성공", flush=True)
-
                 review.request(task)
 
                 if not send_review_request(task):
-                    print("Slack 승인 요청 전송 실패")
+                    notify("❌ Slack 승인 버튼 전송 실패")
                     return False
 
                 report_screenshot(
-                    f"📸 Unity Android 빌드 성공\n"
-                    f"TODO: {task}"
+                    f"📸 Unity 빌드 후 화면\nTODO: {task}"
                 )
                 break
 
             error_log = validation.output[-6000:]
 
-            send_message(
+            notify(
                 f"⚠️ Unity 빌드 실패\n"
+                f"TODO: {task}\n"
                 f"시도: {attempt}/{MAX_RETRIES}\n"
-                f"오류: {error_log[-1000:]}"
+                f"오류:\n{error_log[-1000:]}"
             )
 
         else:
-            send_message(
+            notify(
                 f"🚨 Unity 빌드 {MAX_RETRIES}회 실패\n"
-                f"TODO: {task}\n"
-                "사용자 확인이 필요합니다."
+                f"TODO: {task}"
             )
             return False
 
     decision = wait_for_review(review, task)
 
-    if decision == "approved":
-        send_message(
-            f"✅ 사용자 승인 완료\n"
-            f"TODO: {task}"
+    if decision != "approved":
+        notify(
+            f"⛔ 작업 중단\n"
+            f"TODO: {task}\n"
+            f"승인 결과: {decision}"
         )
-        return True
+        return False
 
-    send_message(
-        f"⛔ 작업 승인되지 않음\n"
+    return True
+
+
+def prepare_git_branch(git: GitManager, task: str) -> str:
+    """TODO마다 고유한 작업 브랜치를 준비."""
+
+    branch = git.branch_for_task(task)
+
+    # 다른 작업의 변경 사항을 보호
+    current = git.current_branch()
+
+    if current != branch and git.has_changes():
+        raise RuntimeError(
+            "미커밋 변경 사항이 있습니다. "
+            "브랜치 전환 전에 Git 상태를 정리하세요."
+        )
+
+    git.prepare_branch(branch)
+
+    if git.current_branch() != branch:
+        raise RuntimeError("Git 브랜치 전환 실패")
+
+    return branch
+
+
+def save_to_git(
+    git: GitManager,
+    task: str,
+    branch: str,
+):
+    """승인된 작업을 Commit + Push."""
+
+    if git.current_branch() != branch:
+        raise RuntimeError("작업 중 Git 브랜치가 변경됐습니다.")
+
+    message = f"feat: complete Unity TODO {branch.split('/')[-1]}"
+
+    committed = git.commit(message)
+
+    # 변경 파일이 없더라도 브랜치 Push
+    git.push()
+
+    notify(
+        f"📦 GitHub Push 완료\n"
+        f"브랜치: {branch}\n"
         f"TODO: {task}\n"
-        f"상태: {decision}"
+        f"새 커밋: {'있음' if committed else '없음'}"
     )
-    return False
 
 
 def main():
-    print("=== Unity Claude Harness 시작 ===", flush=True)
+    print("=== Unity Claude AI Harness ===", flush=True)
 
-    branch = current_branch()
-
-    if branch != EXPECTED_BRANCH:
-        print(
-            f"잘못된 Git 브랜치: {branch}\n"
-            f"필요한 브랜치: {EXPECTED_BRANCH}",
-            flush=True,
-        )
-        return
-
+    git = GitManager(PROJECT_DIR)
     manager = TodoManager(BASE_DIR / "TODO.md")
     review = ReviewManager(BASE_DIR)
 
-    todo = manager.get_next_todo()
+    # 시작 전 안전 검사
+    if git.current_branch() in ("main", "master"):
+        # 새로운 작업 브랜치를 만드는 것은 허용
+        # 단, 기본 브랜치의 미커밋 수정은 금지
+        if git.has_changes():
+            raise RuntimeError(
+                "main/master에 미커밋 변경 사항이 있습니다."
+            )
 
-    if todo is None:
-        print("모든 TODO 완료", flush=True)
-        send_message("✅ 모든 TODO 완료")
-        return
-
-    task = todo.description
-
-    print(f"현재 브랜치: {branch}", flush=True)
-    print(f"현재 TODO: {task}", flush=True)
-
-    send_message(
-        f"🚀 Unity Claude Harness 시작\n"
-        f"브랜치: {branch}\n"
-        f"TODO: {task}"
+    # 원격 저장소 확인
+    remote = subprocess.run(
+        ["git", "remote", "get-url", "origin"],
+        cwd=PROJECT_DIR,
+        capture_output=True,
+        text=True,
     )
 
+    if remote.returncode != 0:
+        raise RuntimeError("Git origin 원격 저장소가 없습니다.")
+
+    notify("🚀 Unity Claude AI Harness 자동 개발 시작")
+
     try:
-        success = execute_task(task, review)
+        while True:
+            todo = manager.get_next_todo()
 
-        if not success:
-            print("작업 중단 — TODO 미완료 유지")
-            return
+            if todo is None:
+                notify("🎉 모든 TODO 완료!")
+                break
 
-        # 승인된 TODO만 완료 처리
-        manager.complete(todo)
+            task = todo.description
 
-        send_message(
-            f"✅ TODO 완료\n"
-            f"브랜치: {branch}\n"
-            f"작업: {task}\n"
-            "다음 TODO는 자동 실행하지 않습니다."
-        )
+            # 1. TODO별 Git 브랜치 준비
+            branch = prepare_git_branch(git, task)
 
-        print("현재 TODO 완료. Harness 종료.")
+            notify(
+                f"📋 새로운 TODO\n"
+                f"브랜치: {branch}\n"
+                f"작업: {task}"
+            )
+
+            # 2. Claude 개발 + Unity 빌드 + Slack 승인
+            success = run_development(task, review)
+
+            if not success:
+                print("TODO 미완료. Harness 중단.")
+                break
+
+            # 3. 승인된 TODO 완료 처리
+            manager.complete(todo)
+
+            # 4. Commit + Push
+            save_to_git(git, task, branch)
+
+            # 5. 다음 TODO로 반복
+            print("다음 TODO 진행...", flush=True)
+            time.sleep(2)
 
     except KeyboardInterrupt:
-        print("Harness 수동 중단", flush=True)
-        send_message("⏹️ Unity Harness 수동 중단")
+        notify("⏹️ Unity Harness 수동 중단")
 
     except Exception as e:
-        print(f"Harness 오류: {e}", flush=True)
-        send_message(
-            f"🚨 Harness 오류\n{str(e)[:500]}"
-        )
+        notify(f"🚨 Harness 오류\n{str(e)[:500]}")
         raise
 
     finally:
-        print("=== Unity Claude Harness 종료 ===", flush=True)
+        print("=== Harness 종료 ===", flush=True)
 
 
 if __name__ == "__main__":
