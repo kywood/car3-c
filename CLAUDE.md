@@ -80,6 +80,7 @@
 - 머티리얼 에셋은 런타임에 수정하지 않는다(야간 조명은 `NightLight`로 오브젝트 켜고 끄기).
 - 후처리: `Assets/Settings/GameVolumeProfile.asset`(ACES, Bloom, Color Adjustments, Vignette).
 - 날씨별 바닥: `WeatherSurfaceView`가 노면 머티리얼을 마른/젖은/눈 변형으로 교체한다. 눈 도로 텍스처(`Assets/Art/Textures/Road_SnowTracks.png`)는 TrackSettings의 차선 위치로 바퀴 자국을 그려 만든다(차선 수·폭을 바꾸면 재생성).
+- 항구 바다: `Car3C/Water` 셰이더(`Assets/Art/Shaders`, 텍스처 없는 절차적 물결·하늘 반사·태양 반짝임·해안 거품)와 `Env_Sea` 머티리얼. 바다 평면은 고정이고 `SeaView`가 주행 거리 mod `_TileLength`(`WaterFlow`)를 MaterialPropertyBlock으로 넘겨 물결을 흘린다. 해안선 위치는 머티리얼 `_ShoreX`.
 - 야간 조명은 실시간 조명 대신 가산 블렌딩 빛 웅덩이(FX_*Pool)와 발광 머티리얼로 표현한다. 실시간 조명은 플레이어 전조등 2개뿐.
 - 모바일 예산: 교통 차량 16대, 배경 구간 8개, 건물·소품 LODGroup 컬링, Quaternius 모델 Mesh LOD, Mobile_RPAsset 그림자 60m·캐스케이드 1, FXAA. `Assets/Vehicles`의 원본 FBX 설정은 바꾸지 않는다.
 - 측정(에디터): 화면에 보이는 렌더러 약 570개, LOD0 기준 약 26만 삼각형. 실기기 FPS는 아직 미검증.

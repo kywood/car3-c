@@ -34,6 +34,8 @@ namespace Car3C.Bootstrap
         [SerializeField] private WheelSpinner _playerWheels;
         [Tooltip("선택: 우주 발사장 맵 이벤트")]
         [SerializeField] private LaunchSiteController _launchSite;
+        [Tooltip("선택: 항구 바다 물결 흐름")]
+        [SerializeField] private SeaView _sea;
 
         private DriveSimulation _simulation;
         private EnvironmentController _environment;
@@ -65,6 +67,7 @@ namespace Car3C.Bootstrap
             _scenery.Initialize(_simulation.Speed);
             if (_railTrain != null) _railTrain.Initialize(_simulation.Speed);
             _farScenery.Initialize(_simulation.Speed);
+            if (_sea != null) _sea.Initialize(_simulation.Speed);
 
             _environment = new EnvironmentController();
             var nightLights = new List<NightLight>(_scenery.NightLights);
