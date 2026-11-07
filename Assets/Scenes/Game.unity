@@ -2698,7 +2698,7 @@ MonoBehaviour:
     - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
     - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
     - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
-    _zones: 1
+    _zones: 17
   - _name: BuildingL2
     _localPosition: {x: -24, y: 0, z: 28}
     _yaw: 90
@@ -2709,7 +2709,7 @@ MonoBehaviour:
     - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
     - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
     - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
-    _zones: 1
+    _zones: 17
   - _name: StreetlightR1
     _localPosition: {x: 11.2, y: 0, z: 15}
     _yaw: -90
@@ -2783,7 +2783,7 @@ MonoBehaviour:
     - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
     - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
     - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
-    _zones: 1
+    _zones: 17
   - _name: BuildingR2
     _localPosition: {x: 36, y: 0, z: 28}
     _yaw: -90
@@ -2794,14 +2794,14 @@ MonoBehaviour:
     - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
     - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
     - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
-    _zones: 1
+    _zones: 17
   - _name: LandFillR
     _localPosition: {x: 90, y: 0.02, z: 20}
     _yaw: 0
     _emptyChance: 0
     _options:
     - {fileID: 3240255603133001634, guid: a826cabf08944c440b6e0877b639c068, type: 3}
-    _zones: 1
+    _zones: 17
   - _name: FieldLeft
     _localPosition: {x: -105.75, y: 0.02, z: 20}
     _yaw: 0

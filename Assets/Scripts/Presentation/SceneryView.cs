@@ -171,7 +171,8 @@ namespace Car3C.Presentation
             {
                 GameObject[] created = _instances[slot][spotIndex];
                 int previous = _activeOption[slot][spotIndex];
-                bool allowed = !inTunnel && (!hasZone || MapZoneSchedule.Contains(_spots[spotIndex].Zones, zone));
+                // 구간 표가 있으면 Tunnel 마스크를 가진 지점(도심 터널 옆 건물 등)만 터널 구간에 나타난다.
+                bool allowed = hasZone ? MapZoneSchedule.Contains(_spots[spotIndex].Zones, zone) : !inTunnel;
                 int next = allowed
                     ? SceneryPicker.Pick(_seed, chunkIndex, spotIndex, created.Length, _spots[spotIndex].EmptyChance)
                     : SceneryPicker.Empty;
