@@ -19,7 +19,7 @@ namespace Car3C.Presentation
             for (int i = 0; i < _bodyRenderers.Length; ++i) _bodyRenderers[i].sharedMaterial = material;
         }
 
-        [SerializeField] private float _crashSpinDegrees = 540f;
+        [SerializeField] private float _crashYawAngle = 45f;
         [SerializeField] private float _crashBlinkInterval = 0.08f;
 
         public void SetPose(float x, float z, bool isHit)
@@ -30,13 +30,13 @@ namespace Car3C.Presentation
             if (!_visualRoot.gameObject.activeSelf) _visualRoot.gameObject.SetActive(true);
         }
 
-        /// <summary>충돌 연출: progress(0~1) 동안 빙글 돌며 깜빡인다. 끝나면 로직이 차량을 제거한다.</summary>
+        /// <summary>충돌 연출: progress(0~1) 동안 _crashYawAngle까지 틀어지며 깜빡인다. 끝나면 로직이 차량을 제거한다.</summary>
         public void SetCrashPose(float x, float z, float progress, float elapsed)
         {
             transform.localPosition = new Vector3(x, 0f, z);
             if (_visualRoot == null) return;
             float eased = 1f - (1f - progress) * (1f - progress);
-            _visualRoot.localRotation = Quaternion.Euler(0f, _hitYawAngle + _crashSpinDegrees * eased, 0f);
+            _visualRoot.localRotation = Quaternion.Euler(0f, Mathf.Lerp(_hitYawAngle, _crashYawAngle, eased), 0f);
             bool visible = Mathf.FloorToInt(elapsed / _crashBlinkInterval) % 2 == 0;
             if (_visualRoot.gameObject.activeSelf != visible) _visualRoot.gameObject.SetActive(visible);
         }
