@@ -52,6 +52,18 @@ namespace Car3C.Tests.EditMode
             Assert.AreEqual(1, rec.NearMisses);
         }
 
+        [TestCase(0f)]
+        [TestCase(-2f)]
+        public void JumpingOnlyAlongsideOrAhead_DoesNotCountAsNearMiss(float carZ)
+        {
+            var rec = new Recorder();
+            TrafficSystem traffic = CreateTraffic(rec);
+            traffic.SpawnCar(2, carZ);
+            for (int i = 0; i < 100; ++i) traffic.Tick(0.02f, 20f, 0d, 0f, 0f, false, 2f);
+            Assert.AreEqual(0, rec.Collisions);
+            Assert.AreEqual(0, rec.NearMisses);
+        }
+
         [Test]
         public void CrashedCar_DisappearsAfterDelay()
         {

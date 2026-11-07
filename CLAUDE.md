@@ -83,3 +83,24 @@
 - 야간 조명은 실시간 조명 대신 가산 블렌딩 빛 웅덩이(FX_*Pool)와 발광 머티리얼로 표현한다. 실시간 조명은 플레이어 전조등 2개뿐.
 - 모바일 예산: 교통 차량 16대, 배경 구간 8개, 건물·소품 LODGroup 컬링, Quaternius 모델 Mesh LOD, Mobile_RPAsset 그림자 60m·캐스케이드 1, FXAA. `Assets/Vehicles`의 원본 FBX 설정은 바꾸지 않는다.
 - 측정(에디터): 화면에 보이는 렌더러 약 570개, LOD0 기준 약 26만 삼각형. 실기기 FPS는 아직 미검증.
+
+
+## Git Branch Development Policy
+
+모든 기능 추가 및 버그 수정은 반드시 별도 작업 브랜치에서 진행한다.
+
+1. main/master 브랜치에서 직접 코드를 수정하지 않는다.
+2. 작업 시작 전에 Git 상태를 확인한다.
+3. TODO마다 독립적인 작업 브랜치를 생성한다.
+   - feature/<task-name>
+   - fix/<task-name>
+4. 기존 미커밋 변경 사항을 임의로 삭제하거나 덮어쓰지 않는다.
+5. Claude Code는 해당 작업 브랜치에서만 코드를 수정한다.
+6. Unity 빌드와 테스트 결과를 확인한다.
+7. 검증된 변경 사항을 Git에 커밋한다.
+8. 원격 저장소의 작업 브랜치로 Push한다.
+9. main/master로의 Merge는 사용자 승인 후 진행한다.
+10. force push 및 위험한 Git 명령은 사용자 승인 없이 실행하지 않는다.
+
+Git 브랜치 생성, Commit, Push는 Python Harness가 관리한다.
+Claude Code는 임의로 브랜치를 변경하거나 Commit/Push하지 않는다.

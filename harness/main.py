@@ -1,275 +1,319 @@
 
+import subprocess
+import time
 from pathlib import Path
 
 from core.todo_manager import TodoManager
 from core.coding_agent import CodingAgent
 from core.validator import UnityValidator
 from core.review_manager import ReviewManager
+from core.git_manager import GitManager
 
-from slack_reporter import send_message, send_screenshot
+from slack_reporter import (
+    send_message,
+    send_screenshot,
+    send_review_request,
+)
 from reporters.screenshot import capture_screen
 
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = BASE_DIR.parent
 
-REPORT_INTERVAL = 300   # 5분마다 진행 보고
-CODEX_TIMEOUT = 900     # Codex 15분
-BUILD_TIMEOUT = 1200    # Unity 빌드 20분
-MAX_RETRIES = 3         # 최대 3회 시도
+REPORT_INTERVAL = 300
+CLAUDE_TIMEOUT = 900
+BUILD_TIMEOUT = 1200
+MAX_RETRIES = 3
+REVIEW_POLL_INTERVAL = 5
 
 
-def report_progress(task: str, elapsed: int):
-    """Codex 작업 중간 보고."""
-    send_message(
-        f"🔄 Unity Harness 작업 진행 중\n"
-        f"TODO: {task}\n"
-        f"경과 시간: {elapsed // 60}분"
-    )
-
+def notify(message: str):
+    print(message, flush=True)
     try:
-        image_path = capture_screen()
-        send_screenshot(
-            image_path,
-            f"📸 Unity 작업 화면\n"
-            f"TODO: {task}\n"
-            f"경과 시간: {elapsed // 60}분"
-        )
+        send_message(message)
     except Exception as e:
-        print(f"스크린샷 전송 실패: {e}")
+        print(f"Slack 보고 오류: {e}", flush=True)
 
 
 def report_screenshot(message: str):
-    """Windows 화면 캡처 및 Slack 전송."""
     try:
-        image_path = capture_screen()
-        send_screenshot(image_path, message)
+        path = capture_screen()
+        send_screenshot(path, message)
     except Exception as e:
-        print(f"스크린샷 전송 실패: {e}")
+        print(f"스크린샷 오류: {e}", flush=True)
+
+
+def report_progress(task: str, elapsed: int):
+    notify(
+        f"🔄 Claude Code 작업 중\n"
+        f"TODO: {task[:400]}\n"
+        f"경과 시간: {elapsed // 60}분"
+    )
+    report_screenshot(f"📸 작업 진행: {task[:400]}")
+
+
+def wait_for_review(review: ReviewManager, task: str) -> str:
+    print("Slack 승인 대기...", flush=True)
+
+    while True:
+        status = review.get_status(task)
+
+        if status in ("approved", "rejected"):
+            return status
+
+        if status != "pending":
+            return "invalid"
+
+        time.sleep(REVIEW_POLL_INTERVAL)
 
 
 def make_prompt(task: str, error_log: str | None) -> str:
-    """최초 작업 또는 빌드 오류 수정 요청 생성."""
     if not error_log:
         return task
 
     return (
-        f"원래 개발 TODO:\n{task}\n\n"
-        "이전 작업 이후 Unity Android 빌드가 실패했다.\n"
-        "기존 변경 사항과 오류 로그를 분석하고 수정하라.\n"
-        "기능 요구사항을 유지하라.\n"
-        "불필요한 리팩터링은 하지 마라.\n"
-        "Git 커밋은 하지 마라.\n\n"
-        f"Unity 빌드 오류 로그:\n{error_log[-6000:]}"
+        f"원래 TODO: {task}\n\n"
+        "이전 Unity 빌드가 실패했다.\n"
+        "기능 요구사항을 유지하면서 오류를 수정하라.\n"
+        "CLAUDE.md 지침을 준수하라.\n"
+        "Git 브랜치 변경, 커밋, Push는 하지 마라.\n\n"
+        f"Unity 빌드 오류:\n{error_log[-6000:]}"
+    )
+
+
+def run_development(task: str, review: ReviewManager) -> bool:
+    """Claude 개발 → Unity 빌드 → Slack 승인."""
+
+    status = review.get_status(task)
+
+    # 재시작 시 이미 승인된 작업 복구
+    if status == "approved":
+        return True
+
+    if status == "rejected":
+        notify(
+            f"⛔ 이전에 거절된 작업\n"
+            f"TODO: {task}\n"
+            "사용자 재작업 지시 필요"
+        )
+        return False
+
+    if status != "pending":
+        agent = CodingAgent(PROJECT_DIR)
+        validator = UnityValidator(PROJECT_DIR)
+        error_log = None
+
+        for attempt in range(1, MAX_RETRIES + 1):
+            notify(
+                f"🤖 Claude Code 개발 시작\n"
+                f"TODO: {task}\n"
+                f"시도: {attempt}/{MAX_RETRIES}"
+            )
+
+            try:
+                result = agent.execute(
+                    make_prompt(task, error_log),
+                    timeout=CLAUDE_TIMEOUT,
+                    on_progress=report_progress,
+                    report_interval=REPORT_INTERVAL,
+                )
+            except Exception as e:
+                notify(f"❌ Claude 실행 오류: {str(e)[:500]}")
+                return False
+
+            if result.status == "usage_limit":
+                notify(
+                    f"⏸️ Claude 사용량 제한\n"
+                    f"TODO: {task}\n"
+                    "작업을 안전하게 중단합니다."
+                )
+                return False
+
+            if result.status != "success":
+                notify(
+                    f"❌ Claude 실행 실패\n"
+                    f"TODO: {task}\n"
+                    f"상태: {result.status}"
+                )
+                return False
+
+            notify(
+                f"🔨 Unity Android 빌드 시작\n"
+                f"TODO: {task}"
+            )
+
+            try:
+                validation = validator.validate(
+                    timeout=BUILD_TIMEOUT
+                )
+            except Exception as e:
+                notify(
+                    f"❌ Unity Validator 오류: {str(e)[:500]}"
+                )
+                return False
+
+            if validation.success:
+                review.request(task)
+
+                if not send_review_request(task):
+                    notify("❌ Slack 승인 버튼 전송 실패")
+                    return False
+
+                report_screenshot(
+                    f"📸 Unity 빌드 후 화면\nTODO: {task}"
+                )
+                break
+
+            error_log = validation.output[-6000:]
+
+            notify(
+                f"⚠️ Unity 빌드 실패\n"
+                f"TODO: {task}\n"
+                f"시도: {attempt}/{MAX_RETRIES}\n"
+                f"오류:\n{error_log[-1000:]}"
+            )
+
+        else:
+            notify(
+                f"🚨 Unity 빌드 {MAX_RETRIES}회 실패\n"
+                f"TODO: {task}"
+            )
+            return False
+
+    decision = wait_for_review(review, task)
+
+    if decision != "approved":
+        notify(
+            f"⛔ 작업 중단\n"
+            f"TODO: {task}\n"
+            f"승인 결과: {decision}"
+        )
+        return False
+
+    return True
+
+
+def prepare_git_branch(git: GitManager, task: str) -> str:
+    """TODO마다 고유한 작업 브랜치를 준비."""
+
+    branch = git.branch_for_task(task)
+
+    # 다른 작업의 변경 사항을 보호
+    current = git.current_branch()
+
+    if current != branch and git.has_changes():
+        raise RuntimeError(
+            "미커밋 변경 사항이 있습니다. "
+            "브랜치 전환 전에 Git 상태를 정리하세요."
+        )
+
+    git.prepare_branch(branch)
+
+    if git.current_branch() != branch:
+        raise RuntimeError("Git 브랜치 전환 실패")
+
+    return branch
+
+
+def save_to_git(
+    git: GitManager,
+    task: str,
+    branch: str,
+):
+    """승인된 작업을 Commit + Push."""
+
+    if git.current_branch() != branch:
+        raise RuntimeError("작업 중 Git 브랜치가 변경됐습니다.")
+
+    message = f"feat: complete Unity TODO {branch.split('/')[-1]}"
+
+    committed = git.commit(message)
+
+    # 변경 파일이 없더라도 브랜치 Push
+    git.push()
+
+    notify(
+        f"📦 GitHub Push 완료\n"
+        f"브랜치: {branch}\n"
+        f"TODO: {task}\n"
+        f"새 커밋: {'있음' if committed else '없음'}"
     )
 
 
 def main():
-    print("=== Unity Harness 시작 ===", flush=True)
+    print("=== Unity Claude AI Harness ===", flush=True)
 
-    # 1. 관리자 초기화
+    git = GitManager(PROJECT_DIR)
     manager = TodoManager(BASE_DIR / "TODO.md")
     review = ReviewManager(BASE_DIR)
 
-    todos = manager.get_todos()
-    completed = sum(todo.completed for todo in todos)
+    # 시작 전 안전 검사
+    if git.current_branch() in ("main", "master"):
+        # 새로운 작업 브랜치를 만드는 것은 허용
+        # 단, 기본 브랜치의 미커밋 수정은 금지
+        if git.has_changes():
+            raise RuntimeError(
+                "main/master에 미커밋 변경 사항이 있습니다."
+            )
 
-    print(f"전체 TODO: {len(todos)}")
-    print(f"완료 TODO: {completed}")
-
-    # 2. 다음 미완료 TODO
-    todo = manager.get_next_todo()
-
-    if todo is None:
-        print("모든 TODO 완료", flush=True)
-        send_message("✅ Unity Harness: 모든 TODO 완료!")
-        return
-
-    task = todo.description
-    print(f"현재 작업: {task}", flush=True)
-
-    # 3. 기존 승인 상태 확인
-    review_status = review.get_status(task)
-
-    if review_status == "pending":
-        print("사용자 승인 대기 중 — Codex 재실행하지 않음")
-        send_message(
-            f"⏳ Unity Harness 승인 대기\n"
-            f"TODO: {task}\n"
-            f"상태: 게임 동작 검증 대기\n"
-            f"중복 실행을 방지했습니다."
-        )
-        return
-
-    if review_status == "approved":
-        print("사용자 승인 상태 확인")
-        manager.complete(todo)
-
-        send_message(
-            f"✅ TODO 완료 처리\n"
-            f"TODO: {task}"
-        )
-        return
-
-    if review_status == "rejected":
-        print("이전 검증이 거절된 작업입니다.")
-        send_message(
-            f"🔁 이전 검증 거절 — 수정 재시도\n"
-            f"TODO: {task}"
-        )
-
-    # 4. 작업 시작 보고
-    send_message(
-        f"🚀 Unity Harness 작업 시작\n"
-        f"프로젝트: car3-c\n"
-        f"진행률: {completed}/{len(todos)}\n"
-        f"TODO: {task}"
+    # 원격 저장소 확인
+    remote = subprocess.run(
+        ["git", "remote", "get-url", "origin"],
+        cwd=PROJECT_DIR,
+        capture_output=True,
+        text=True,
     )
 
-    agent = CodingAgent(PROJECT_DIR)
-    validator = UnityValidator(PROJECT_DIR)
+    if remote.returncode != 0:
+        raise RuntimeError("Git origin 원격 저장소가 없습니다.")
 
-    error_log = None
+    notify("🚀 Unity Claude AI Harness 자동 개발 시작")
 
-    # 5. Codex 수정 → Unity 빌드 루프
-    for attempt in range(1, MAX_RETRIES + 1):
-        print(
-            f"\n=== 작업 시도 {attempt}/{MAX_RETRIES} ===",
-            flush=True
-        )
+    try:
+        while True:
+            todo = manager.get_next_todo()
 
-        send_message(
-            f"🤖 Codex 작업 시작\n"
-            f"TODO: {task}\n"
-            f"시도: {attempt}/{MAX_RETRIES}"
-        )
+            if todo is None:
+                notify("🎉 모든 TODO 완료!")
+                break
 
-        prompt = make_prompt(task, error_log)
+            task = todo.description
 
-        # Codex 실행
-        try:
-            result = agent.execute(
-                prompt,
-                timeout=CODEX_TIMEOUT,
-                on_progress=report_progress,
-                report_interval=REPORT_INTERVAL,
-            )
-        except Exception as e:
-            print(f"Codex 실행 오류: {e}")
-            send_message(
-                f"❌ Codex 실행 오류\n"
-                f"TODO: {task}\n"
-                f"오류: {str(e)[:500]}"
-            )
-            return
+            # 1. TODO별 Git 브랜치 준비
+            branch = prepare_git_branch(git, task)
 
-        print(f"Codex 상태: {result.status}")
-        print(f"Codex 로그: {result.log_path}")
-
-        # Codex 사용량 제한
-        if result.status == "usage_limit":
-            send_message(
-                f"⏸️ Codex 사용량 제한\n"
-                f"TODO: {task}\n"
-                f"상태: 작업 중단 — TODO 미완료 유지"
-            )
-            return
-
-        # Codex 시간 초과
-        if result.status == "timeout":
-            send_message(
-                f"⏱️ Codex 실행 시간 초과\n"
-                f"TODO: {task}"
-            )
-            return
-
-        # 기타 실행 실패
-        if result.status != "success":
-            send_message(
-                f"❌ Codex 작업 실패\n"
-                f"TODO: {task}\n"
-                f"종료 코드: {result.returncode}"
-            )
-            return
-
-        # 6. Unity 빌드 검증
-        send_message(
-            f"🔨 Unity Android 빌드 시작\n"
-            f"TODO: {task}\n"
-            f"시도: {attempt}/{MAX_RETRIES}"
-        )
-
-        try:
-            validation = validator.validate(
-                timeout=BUILD_TIMEOUT
-            )
-        except Exception as e:
-            print(f"Unity 검증 오류: {e}")
-            send_message(
-                f"❌ Unity 검증 오류\n"
-                f"TODO: {task}\n"
-                f"오류: {str(e)[:500]}"
-            )
-            return
-
-        print(f"Unity 빌드 성공: {validation.success}")
-        print(f"Unity 빌드 로그: {validation.log_path}")
-
-        # 7. 빌드 성공 → 승인 요청
-        if validation.success:
-            print("Unity 빌드 검증 성공!", flush=True)
-
-            review.request(task)
-
-            send_message(
-                f"✅ Unity Android 빌드 성공\n"
-                f"📋 게임 동작 검증 요청\n"
-                f"프로젝트: car3-c\n"
-                f"TODO: {task}\n"
-                f"시도: {attempt}/{MAX_RETRIES}\n"
-                f"상태: 사용자 승인 대기\n\n"
-                f"게임을 실행해서 기능이 정상인지 확인해 주세요."
+            notify(
+                f"📋 새로운 TODO\n"
+                f"브랜치: {branch}\n"
+                f"작업: {task}"
             )
 
-            report_screenshot(
-                f"📸 Unity 빌드 후 Windows 화면\n"
-                f"TODO: {task}"
-            )
+            # 2. Claude 개발 + Unity 빌드 + Slack 승인
+            success = run_development(task, review)
 
-            print("사용자 승인 대기", flush=True)
-            return
+            if not success:
+                print("TODO 미완료. Harness 중단.")
+                break
 
-        # 8. 빌드 실패 → 오류를 Codex에 전달
-        error_log = validation.output[-6000:]
+            # 3. 승인된 TODO 완료 처리
+            manager.complete(todo)
 
-        print("Unity 빌드 실패", flush=True)
+            # 4. Commit + Push
+            save_to_git(git, task, branch)
 
-        send_message(
-            f"⚠️ Unity Android 빌드 실패\n"
-            f"TODO: {task}\n"
-            f"시도: {attempt}/{MAX_RETRIES}\n"
-            f"종료 코드: {validation.returncode}\n"
-            f"로그: {validation.log_path}\n"
-            f"최근 오류:\n{error_log[-1200:]}"
-        )
+            # 5. 다음 TODO로 반복
+            print("다음 TODO 진행...", flush=True)
+            time.sleep(2)
 
-        if attempt < MAX_RETRIES:
-            send_message(
-                f"🔁 Codex 자동 수정 재시도\n"
-                f"TODO: {task}\n"
-                f"다음 시도: {attempt + 1}/{MAX_RETRIES}"
-            )
+    except KeyboardInterrupt:
+        notify("⏹️ Unity Harness 수동 중단")
 
-    # 9. 최대 재시도 초과
-    print("최대 수정 횟수 초과", flush=True)
+    except Exception as e:
+        notify(f"🚨 Harness 오류\n{str(e)[:500]}")
+        raise
 
-    send_message(
-        f"🚨 Unity Harness 작업 중단\n"
-        f"TODO: {task}\n"
-        f"빌드 실패: {MAX_RETRIES}회\n"
-        f"상태: 사용자 확인 필요\n"
-        f"TODO 미완료 유지"
-    )
+    finally:
+        print("=== Harness 종료 ===", flush=True)
 
 
 if __name__ == "__main__":
