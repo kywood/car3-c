@@ -133,6 +133,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ed2fce3542506c9498e7ecfd93cf5fa4, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1438ea252ea57e7479105eea63f72baa, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 00c5fa842e019fd43a311e5ae5348049, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0c53c0079dc5ba24cabbd2ae10b7c958, type: 2}
     - target: {fileID: 919132149155446097, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
       propertyPath: m_Name
       value: Lifeboat

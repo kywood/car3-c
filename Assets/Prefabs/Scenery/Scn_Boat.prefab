@@ -133,6 +133,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8d2a0f30ba20c96459b9700ba3abd758, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2daf79c905b485249b91399efaa1ff09, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 8d2a0f30ba20c96459b9700ba3abd758, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cbf9d277fd526da4890d06b6ce981f22, type: 2}
     - target: {fileID: 919132149155446097, guid: 8d2a0f30ba20c96459b9700ba3abd758, type: 3}
       propertyPath: m_Name
       value: Boat

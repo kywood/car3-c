@@ -32,6 +32,9 @@ namespace Car3C.Bootstrap
         [SerializeField] private RailLineView[] _extraRailLines = Array.Empty<RailLineView>();
         [Tooltip("선택: 하늘을 지나가는 비행기")]
         [SerializeField] private AirplaneView _airplane;
+        [Tooltip("선택: 도로 굴곡(상하·좌우) 화면 효과")]
+        [SerializeField] private RoadBendView _roadBend;
+        [SerializeField] private RoadBendSettings _roadBendSettings;
         [SerializeField] private SceneryView _farScenery;
         [SerializeField] private EnvironmentView _environmentView;
         [SerializeField] private EnvironmentButtonsView _environmentButtons;
@@ -89,6 +92,8 @@ namespace Car3C.Bootstrap
             InitializeRailLine(_railLine);
             for (int i = 0; i < _extraRailLines.Length; ++i) InitializeRailLine(_extraRailLines[i]);
             if (_airplane != null) _airplane.Initialize(new SkyTrafficSchedule(System.Environment.TickCount));
+            if (_roadBend != null && _roadBendSettings != null)
+                _roadBend.Initialize(_roadBendSettings.CreateVertical(), _roadBendSettings.CreateLateral(), _simulation.Speed);
 
             if (_launchSite != null)
             {

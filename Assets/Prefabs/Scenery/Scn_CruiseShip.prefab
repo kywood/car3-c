@@ -112,6 +112,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: fb2e2a83cd3795849b6ccdb7b3d01078, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 195875d8f6a83a74094b6a69447f7c1e, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9429ecbb5af446749bf64841f6cd29f4, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d2a914b72412d546813ff7e1960848d, type: 2}
     - target: {fileID: 919132149155446097, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
       propertyPath: m_Name
       value: CruiseShip

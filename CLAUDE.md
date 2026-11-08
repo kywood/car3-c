@@ -70,13 +70,16 @@
 - 터널은 도심 박스형 지하차도(콘크리트 상판·난간·옹벽·노란 띠·중앙 조명줄)이며, 도시 건물/매립지 지점은 `Tunnel` 마스크도 가져 터널 양옆에 계속 나타난다.
 - 도심 지형(City 마스크만): 갓길 바깥 연석+보도(`Scn_CitySidewalk`, 좌 x=-11.75 / 우 x=11.75·yaw 180), 이면도로(`Scn_CityBackStreet`, 좌 x=-42 / 우 x=56), 뒷줄 건물(좌 x=-62 / 우 x=76). 노면 재질 `Env_Sidewalk*`, `Road_BackStreet*`는 프리팹 크기(5×40, 8×40m)에 맞춘 타일링이며 WeatherSurfaceView 변형에 등록돼 있다.
 - 향후 맵 툴이 만들 데이터는 이 구간 표/배치 지점을 대체한다.
+- 도로 굴곡(상하·좌우)은 화면 효과("curved world"): 게임 규칙은 곧은 도로 그대로, 셰이더(`Car3C_Bend.hlsl`)가 차 앞쪽 세상을 휜다.
+  굴곡 데이터는 임시로 `RoadBendSettings`(사인파 합) → `RoadBendProfile`(순수) → `RoadBendView`(셰이더 전역값). 맵 툴 도입 시 맵 툴이 만든 거리별 높이·곡선 데이터로 이 데이터 원천만 교체한다(셰이더는 텍스처 샘플링으로 한 단계 변경). Strength 0이면 끔.
+  굴곡을 받으려면 재질이 굴곡 셰이더(`Car3C/WeatherLit`, `Car3C/ParticlesUnlit`, Water, WetStreak)를 써야 하고(새 재질도 URP Lit 대신 이것), 길이 방향으로 긴 메시는 4m 이하로 나눠야 한다(정점에서 휨). 바다·배는 `CAR3C_BEND_WATER_LEVEL`로 해수면 유지.
 
 ## 맵 이벤트·기능
 - 우주 발사장: `RocketLaunchSequence`(순수, 시작 시각만으로 상태 계산 → Photon 동기화는 시작 시각 하나), `LaunchSiteSchedule`, `LaunchSiteController`(배치·이벤트 시작, `LaunchRequested`/`BeginLaunch`로 네트워크 확장), `RocketLaunchView`/`LaunchCountdownView`/`LaunchAudio`(연출·사운드 훅). 카메라 흔들림은 기본 꺼짐.
 - 고가 경전철은 항구 구간에만: `RailRoute`(곡선 노선) + `RailLineView`.
 - 고속철도: 평지·발사장 구간 왼쪽(x -26) 지상 선로, `RailLineView`(Zone=Plain, `_departAhead`)로 노선이 230m 앞에 오면 마주 오는 열차가 한 번 스쳐 지나간다.
 - 우주 발사: `LaunchSiteSchedule.ShouldTriggerOnApproach` — 현재 속도로 이륙 순간 발사장이 약 80m 앞에 오도록 카운트다운 시작.
-- 비행기: `SkyTrafficSchedule`(순수, 씨앗·시간으로 결정) + `AirplaneView`. 카메라가 지평선 위 약 10°까지만 보므로 330~420m 앞, 고도 55~90m로 지나간다(카메라 원거리 900m).
+- 비행기: `SkyTrafficSchedule`(순수, 씨앗·시간으로 결정) + `AirplaneView`. 170~240m 앞, 고도 42~64m로 화면 위쪽을 지나간다(카메라 원거리 900m). 모델은 기수가 -z라 Model을 180° 돌려 둠.
 - 점프: `JumpMotion`(순수), Space/W/↑, 위로 스와이프, JUMP 버튼. 공중에서는 차량 위를 넘어가며 근접 추월로 계산.
 - 충돌한 교통 차량은 돌며 깜빡이다 `CrashRemoveSeconds` 뒤 사라진다.
 - 시점: `ViewModeController`(순수, 추적 ↔ 운전석), VIEW 버튼·C/V 키. `FollowCamera`가 차량 Visual 아래 `CockpitAnchor`로 부드럽게 이동하고 운전석에서만 `CockpitInterior`(독자 디자인 계기판·운전대·기둥)를 켠다.

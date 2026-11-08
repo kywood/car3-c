@@ -44,6 +44,7 @@ namespace Car3C.Presentation
             for (int slot = 0; slot < _segmentCount; ++slot)
             {
                 _segments[slot] = BuildSegment(layout, slot);
+                SliceLongBlocks(_segments[slot], 2f);
             }
 
             // 움직이는 구간은 앞으로 약 (구간 수 - 뒤 구간 수) × 길이까지만 있다. 그 너머가 비어 보이지 않도록
@@ -122,6 +123,45 @@ namespace Car3C.Presentation
             return root;
         }
 
+        /// <summary>
+        /// 길이 방향(z)으로 여러 칸 나눈 단위 상자. 도로 굴곡은 정점에서 휘므로, 긴 고정 도로는 정점이 촘촘해야 함께 휜다.
+        /// </summary>
+        private static Mesh BuildSlicedCube(int slices)
+        {
+            var vertices = new System.Collections.Generic.List<Vector3>();
+            var normals = new System.Collections.Generic.List<Vector3>();
+            var uvs = new System.Collections.Generic.List<Vector2>();
+            var triangles = new System.Collections.Generic.List<int>();
+            // 위·아래·왼쪽·오른쪽 면은 z로 나누고, 앞뒤 끝면은 한 장.
+            void Strip(Vector3 normal, System.Func<float, float, Vector3> point)
+            {
+                int start = vertices.Count;
+                for (int i = 0; i <= slices; ++i)
+                {
+                    float t = i / (float)slices;
+                    vertices.Add(point(-0.5f, t - 0.5f)); vertices.Add(point(0.5f, t - 0.5f));
+                    normals.Add(normal); normals.Add(normal);
+                    uvs.Add(new Vector2(0f, t)); uvs.Add(new Vector2(1f, t));
+                }
+                for (int i = 0; i < slices; ++i)
+                {
+                    int a = start + i * 2;
+                    Vector3 n = Vector3.Cross(vertices[a + 2] - vertices[a], vertices[a + 1] - vertices[a]);
+                    if (Vector3.Dot(n, normal) >= 0f) triangles.AddRange(new[] { a, a + 2, a + 1, a + 1, a + 2, a + 3 });
+                    else triangles.AddRange(new[] { a, a + 1, a + 2, a + 1, a + 3, a + 2 });
+                }
+            }
+            Strip(Vector3.up, (u, z) => new Vector3(u, 0.5f, z));
+            Strip(Vector3.down, (u, z) => new Vector3(u, -0.5f, z));
+            Strip(Vector3.left, (u, z) => new Vector3(-0.5f, u, z));
+            Strip(Vector3.right, (u, z) => new Vector3(0.5f, u, z));
+            var mesh = new Mesh { name = $"SlicedCube_{slices}" };
+            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetUVs(0, uvs); mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateTangents();
+            mesh.RecalculateBounds();
+            return mesh;
+        }
+
         private void BuildFarStrip(LaneLayout layout, string name, float startZ, float endZ)
         {
             Transform root = new GameObject(name).transform;
@@ -140,6 +180,35 @@ namespace Car3C.Presentation
             float railX = roadWidth * 0.5f + _guardrailOffset;
             CreateBlock(root, "GuardrailBeam", _guardrailMaterial, new Vector3(-railX, 0.72f, centerZ), new Vector3(0.08f, 0.3f, length));
             CreateBlock(root, "GuardrailBeam", _guardrailMaterial, new Vector3(railX, 0.72f, centerZ), new Vector3(0.08f, 0.3f, length));
+
+            SliceLongBlocks(root, 4f);
+        }
+
+        private readonly System.Collections.Generic.Dictionary<int, Mesh> _slicedMeshes = new System.Collections.Generic.Dictionary<int, Mesh>();
+
+        /// <summary>
+        /// 도로 굴곡은 정점에서 휘므로, 길이 방향으로 긴 상자는 step(m)마다 나눈 메시로 바꾼다.
+        /// 나누지 않으면 오목한 곳에서 짧은 차선 점선이 긴 노면 아래로 묻힌다.
+        /// </summary>
+        private void SliceLongBlocks(Transform root, float step)
+        {
+            foreach (MeshFilter filter in root.GetComponentsInChildren<MeshFilter>())
+            {
+                float length = filter.transform.localScale.z;
+                if (length < step * 1.5f) continue;
+                int slices = Mathf.CeilToInt(length / step);
+                if (!_slicedMeshes.TryGetValue(slices, out Mesh mesh))
+                {
+                    mesh = BuildSlicedCube(slices);
+                    _slicedMeshes.Add(slices, mesh);
+                }
+                filter.sharedMesh = mesh;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (Mesh mesh in _slicedMeshes.Values) Destroy(mesh);
         }
 
         /// <summary>가드레일: 일정 간격의 기둥 위에 철제 빔 두 줄. 구간 길이만큼 이어져 끊김 없이 보인다.</summary>

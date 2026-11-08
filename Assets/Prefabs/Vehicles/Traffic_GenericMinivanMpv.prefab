@@ -478,7 +478,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5813471410899922558}
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 1593e15192b02d84394d5e12a0bef89a, type: 2}
 --- !u!23 &145501102655805873
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -576,10 +576,106 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2611591270404122368, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a01839335cb91f4d9d168ef22e03909, type: 2}
+    - target: {fileID: -2611591270404122368, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 52cb15f627a04d74f9b0d3794e17a7aa, type: 2}
+    - target: {fileID: -2611591270404122368, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e98246903a98e704faacc9c17643b4c6, type: 2}
+    - target: {fileID: -1673170570598917562, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a01839335cb91f4d9d168ef22e03909, type: 2}
+    - target: {fileID: -1673170570598917562, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 52cb15f627a04d74f9b0d3794e17a7aa, type: 2}
+    - target: {fileID: -1673170570598917562, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e98246903a98e704faacc9c17643b4c6, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e4d02e2818342a8468d9b54d85c3160c, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d5e67e2a71a45e247bdc0421343e119c, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: be7600e677e4a8244a3224121614bc44, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7a3f0c24b158bb347b37dac94d253803, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e98246903a98e704faacc9c17643b4c6, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e4d5f631e319c3143bd301654c272e46, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[6]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a01839335cb91f4d9d168ef22e03909, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[7]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0e335e37d3323f046bced2fc84d8f618, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[8]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 82007c18f5932544287a0b69a77f633f, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[9]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 63d34d8f2c9bbc0429dde8ce183f4597, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[10]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f7dae317c0b621e448292d0129664fb9, type: 2}
+    - target: {fileID: -1334619455069752124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[11]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d027d84ba5d3ef4ba66363c8ae48002, type: 2}
+    - target: {fileID: -1260421291624594308, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a01839335cb91f4d9d168ef22e03909, type: 2}
+    - target: {fileID: -1260421291624594308, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 52cb15f627a04d74f9b0d3794e17a7aa, type: 2}
+    - target: {fileID: -1260421291624594308, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e98246903a98e704faacc9c17643b4c6, type: 2}
     - target: {fileID: 919132149155446097, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
       propertyPath: m_Name
       value: GenericMinivanMpv
       objectReference: {fileID: 0}
+    - target: {fileID: 1057672621557189110, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a01839335cb91f4d9d168ef22e03909, type: 2}
+    - target: {fileID: 1057672621557189110, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 52cb15f627a04d74f9b0d3794e17a7aa, type: 2}
+    - target: {fileID: 1057672621557189110, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e98246903a98e704faacc9c17643b4c6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -43,6 +43,8 @@ Shader "Car3C/Water"
 
         HLSLINCLUDE
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        #define CAR3C_BEND_WATER_LEVEL  // 바다는 수평 유지(굴곡은 좌우만, 높이는 땅이 낮아질 때만)
+        #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
 
         CBUFFER_START(UnityPerMaterial)
             float4 _DeepColor;

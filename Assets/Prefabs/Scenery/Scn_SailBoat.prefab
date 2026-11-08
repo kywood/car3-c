@@ -134,10 +134,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8460531041354886036, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 840daee8db96d8e40b22dbb4d691cfc0, type: 2}
+    - target: {fileID: -8460531041354886036, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c109acf43d0e6b428401e72442166c1, type: 2}
+    - target: {fileID: -8460531041354886036, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2943ba41fa74b2a4ab525951dacfd7f5, type: 2}
     - target: {fileID: 919132149155446097, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
       propertyPath: m_Name
       value: BoatWSail
       objectReference: {fileID: 0}
+    - target: {fileID: 4731406356249687433, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c109acf43d0e6b428401e72442166c1, type: 2}
+    - target: {fileID: 4731406356249687433, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba2ef081c8d06504c99f1f5de5e66dac, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

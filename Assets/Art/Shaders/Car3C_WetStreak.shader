@@ -28,6 +28,7 @@ Shader "Car3C/WetStreak"
             #pragma fragment Frag
             #pragma multi_compile_fog
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _Color;
