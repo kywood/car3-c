@@ -11,6 +11,8 @@ namespace Car3C.Presentation
     /// </summary>
     public sealed class EnvironmentView : MonoBehaviour
     {
+        private static readonly int SunGlintScaleId = Shader.PropertyToID("_Car3CSunGlintScale");
+
         [Serializable]
         private struct Look
         {
@@ -114,6 +116,8 @@ namespace Car3C.Presentation
         {
             Look look = SelectLook();
             if (look.Sky != null) RenderSettings.skybox = look.Sky;
+            // 비·눈(흐린 하늘)에서는 바다의 해 반짝임을 끈다.
+            Shader.SetGlobalFloat(SunGlintScaleId, _environment.Weather == Weather.Clear ? 1f : 0f);
             RenderSettings.ambientIntensity = look.AmbientIntensity;
             RenderSettings.reflectionIntensity = look.ReflectionIntensity;
             RenderSettings.fogColor = look.FogColor;

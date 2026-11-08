@@ -3111,7 +3111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211085762}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
+  m_LocalRotation: {x: 0.061048545, y: 0, z: 0, w: 0.99813485}
   m_LocalPosition: {x: 0.75133556, y: 0.6520228, z: 2.0559056}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3128,11 +3128,11 @@ Light:
   m_Enabled: 1
   serializedVersion: 13
   m_Type: 0
-  m_Color: {r: 1, g: 0.95, b: 0.85, a: 1}
-  m_Intensity: 40
-  m_Range: 45
-  m_SpotAngle: 62
-  m_InnerSpotAngle: 28
+  m_Color: {r: 1, g: 0.95, b: 0.86, a: 1}
+  m_Intensity: 200
+  m_Range: 80
+  m_SpotAngle: 78
+  m_InnerSpotAngle: 30
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
     m_Type: 0
@@ -6773,6 +6773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e5b7e182c92d74a9bddb9cfc252391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Car3C::Car3C.Presentation.WheelSpinner
+  _maxDegreesPerFrame: 24
 --- !u!23 &585996457 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -6652725513331149018, guid: 933b73b5e5745c649a856c895ebf15bf, type: 3}
@@ -7798,8 +7799,8 @@ Transform:
   m_GameObject: {fileID: 818769398}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.05, z: 18.056707}
-  m_LocalScale: {x: 18, y: 32, z: 1}
+  m_LocalPosition: {x: 0, y: 0.05, z: 31.8}
+  m_LocalScale: {x: 28, y: 60, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1463470039}
@@ -11205,7 +11206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209880832}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
+  m_LocalRotation: {x: 0.061048545, y: 0, z: 0, w: 0.99813485}
   m_LocalPosition: {x: -0.75133556, y: 0.6520228, z: 2.0559056}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11222,11 +11223,11 @@ Light:
   m_Enabled: 1
   serializedVersion: 13
   m_Type: 0
-  m_Color: {r: 1, g: 0.95, b: 0.85, a: 1}
-  m_Intensity: 40
-  m_Range: 45
-  m_SpotAngle: 62
-  m_InnerSpotAngle: 28
+  m_Color: {r: 1, g: 0.95, b: 0.86, a: 1}
+  m_Intensity: 200
+  m_Range: 80
+  m_SpotAngle: 78
+  m_InnerSpotAngle: 30
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
     m_Type: 0
@@ -18188,8 +18189,8 @@ MonoBehaviour:
   _dayRain:
     _sky: {fileID: 2100000, guid: fbd1144fc6638ac499235dcb741385ec, type: 2}
     _sunColor: {r: 0.78, g: 0.8, b: 0.84, a: 1}
-    _sunIntensity: 0.6
-    _ambientIntensity: 1.05
+    _sunIntensity: 0.15
+    _ambientIntensity: 1.35
     _reflectionIntensity: 1
     _fogColor: {r: 0.48, g: 0.51, b: 0.55, a: 1}
     _fogStart: 15
@@ -18303,7 +18304,7 @@ MonoBehaviour:
   - {fileID: 473009789}
   - {fileID: 134169343}
   - {fileID: 2088747133}
-  _rainbowFlowSpeed: 0.35
+  _rainbowFlowSpeed: -5
 --- !u!114 &2116038130
 MonoBehaviour:
   m_ObjectHideFlags: 0
