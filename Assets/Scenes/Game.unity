@@ -2816,6 +2816,78 @@ MonoBehaviour:
     _options:
     - {fileID: 2025427325544952733, guid: 13107a25d878e67448e7835eb61b9e0e, type: 3}
     _zones: 4
+  - _name: CitySidewalkL
+    _localPosition: {x: -11.75, y: 0, z: 20}
+    _yaw: 0
+    _emptyChance: 0
+    _options:
+    - {fileID: 6120437781935520101, guid: 9e3a5c72d8f14b6c8a2e4f6b8d0c2e51, type: 3}
+    _zones: 1
+  - _name: CitySidewalkR
+    _localPosition: {x: 11.75, y: 0, z: 20}
+    _yaw: 180
+    _emptyChance: 0
+    _options:
+    - {fileID: 6120437781935520101, guid: 9e3a5c72d8f14b6c8a2e4f6b8d0c2e51, type: 3}
+    _zones: 1
+  - _name: CityBackStreetL
+    _localPosition: {x: -42, y: 0, z: 20}
+    _yaw: 0
+    _emptyChance: 0
+    _options:
+    - {fileID: 7340562918463720201, guid: 9e3a5c72d8f14b6c8a2e4f6b8d0c2e52, type: 3}
+    _zones: 1
+  - _name: CityBackStreetR
+    _localPosition: {x: 56, y: 0, z: 20}
+    _yaw: 0
+    _emptyChance: 0
+    _options:
+    - {fileID: 7340562918463720201, guid: 9e3a5c72d8f14b6c8a2e4f6b8d0c2e52, type: 3}
+    _zones: 1
+  - _name: BuildingBackL1
+    _localPosition: {x: -62, y: 0, z: 8}
+    _yaw: 90
+    _emptyChance: 0.3
+    _options:
+    - {fileID: 3231650560834233434, guid: 23d7286fe46be1c4db91a34b9dc67d28, type: 3}
+    - {fileID: 2320147201019619620, guid: 7b1b29474a0e554439e75edafb33cdaa, type: 3}
+    - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
+    - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
+    - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
+    _zones: 1
+  - _name: BuildingBackL2
+    _localPosition: {x: -62, y: 0, z: 28}
+    _yaw: 90
+    _emptyChance: 0.3
+    _options:
+    - {fileID: 3231650560834233434, guid: 23d7286fe46be1c4db91a34b9dc67d28, type: 3}
+    - {fileID: 2320147201019619620, guid: 7b1b29474a0e554439e75edafb33cdaa, type: 3}
+    - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
+    - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
+    - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
+    _zones: 1
+  - _name: BuildingBackR1
+    _localPosition: {x: 76, y: 0, z: 8}
+    _yaw: -90
+    _emptyChance: 0.3
+    _options:
+    - {fileID: 3231650560834233434, guid: 23d7286fe46be1c4db91a34b9dc67d28, type: 3}
+    - {fileID: 2320147201019619620, guid: 7b1b29474a0e554439e75edafb33cdaa, type: 3}
+    - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
+    - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
+    - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
+    _zones: 1
+  - _name: BuildingBackR2
+    _localPosition: {x: 76, y: 0, z: 28}
+    _yaw: -90
+    _emptyChance: 0.3
+    _options:
+    - {fileID: 3231650560834233434, guid: 23d7286fe46be1c4db91a34b9dc67d28, type: 3}
+    - {fileID: 2320147201019619620, guid: 7b1b29474a0e554439e75edafb33cdaa, type: 3}
+    - {fileID: 8859261022263325788, guid: e912aafd38ee5714197a59d6559c7c33, type: 3}
+    - {fileID: 1228525746956751134, guid: 19dfcbd406adf2149aae971814053695, type: 3}
+    - {fileID: 2190709368077050031, guid: b0da4cef4feaf8a4cbf0b9611264c288, type: 3}
+    _zones: 1
   _useTunnels: 1
   _tunnelFirstChunk: 8
   _tunnelPeriod: 22
@@ -3228,10 +3300,10 @@ MonoBehaviour:
   _countdown: {fileID: 691207239}
   _audio: {fileID: 4469146932811574953}
   _timeline:
-    _countdownSeconds: 10
-    _ignitionSeconds: 3
+    _countdownSeconds: 5
+    _ignitionSeconds: 2
     _ascentSeconds: 30
-    _ascentAcceleration: 3
+    _ascentAcceleration: 6
     _shakeFadeSeconds: 8
   _firstDistance: 1900
   _repeatDistance: 3520
@@ -3825,7 +3897,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281245439
   m_fontColor: {r: 1, g: 0.62, b: 0.18, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3838,7 +3910,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -10324,7 +10396,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5a73c19f2b64d08b7c1a9e3d5f20846, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Car3C::Car3C.Presentation.SeaView
 --- !u!1 &1056548405
 GameObject:
@@ -17615,6 +17687,14 @@ MonoBehaviour:
   - _dry: {fileID: 2100000, guid: d0b69adbb3a69fd4aae4a5b868b2e65a, type: 2}
     _wet: {fileID: 0}
     _snow: {fileID: 2100000, guid: dc4fdfb8454c9094088d36a5e31c6e37, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: 4c1e7a90b3d24f6a8e5b2c7d9f0a1b31, type: 2}
+    _wet: {fileID: 2100000, guid: 4c1e7a90b3d24f6a8e5b2c7d9f0a1b32, type: 2}
+    _snow: {fileID: 2100000, guid: 4c1e7a90b3d24f6a8e5b2c7d9f0a1b33, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: 7d2f8b41c6e3405a9f1a3b5c7e9d0c41, type: 2}
+    _wet: {fileID: 2100000, guid: 7d2f8b41c6e3405a9f1a3b5c7e9d0c42, type: 2}
+    _snow: {fileID: 2100000, guid: 7d2f8b41c6e3405a9f1a3b5c7e9d0c43, type: 2}
     _rainbow: {fileID: 0}
   _roots:
   - {fileID: 329306167}
