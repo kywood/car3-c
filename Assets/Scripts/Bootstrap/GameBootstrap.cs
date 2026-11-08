@@ -35,6 +35,8 @@ namespace Car3C.Bootstrap
         [Tooltip("선택: 도로 굴곡(상하·좌우) 화면 효과")]
         [SerializeField] private RoadBendView _roadBend;
         [SerializeField] private RoadBendSettings _roadBendSettings;
+        [Tooltip("선택: 세계 랜드마크(각국 상징 조형)")]
+        [SerializeField] private LandmarkView _landmarks;
         [SerializeField] private SceneryView _farScenery;
         [SerializeField] private EnvironmentView _environmentView;
         [SerializeField] private EnvironmentButtonsView _environmentButtons;
@@ -100,6 +102,7 @@ namespace Car3C.Bootstrap
             InitializeRailLine(_railLine);
             for (int i = 0; i < _extraRailLines.Length; ++i) InitializeRailLine(_extraRailLines[i]);
             if (_airplane != null) _airplane.Initialize(new SkyTrafficSchedule(System.Environment.TickCount));
+            if (_landmarks != null) _landmarks.Initialize(_simulation.Speed);
             if (_roadBend != null && _roadBendSettings != null)
                 _roadBend.Initialize(_roadBendSettings.CreateVertical(), _roadBendSettings.CreateLateral(), _simulation.Speed);
 
