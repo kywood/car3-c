@@ -16,6 +16,7 @@ namespace Car3C.Presentation
         [SerializeField] private UnityEngine.UI.Button _snowButton;
         [SerializeField] private UnityEngine.UI.Button _nightButton;
         [SerializeField] private UnityEngine.UI.Button _rainbowButton;
+        [SerializeField] private UnityEngine.UI.Button _roadButton;
         [SerializeField] private Color _offColor = new Color(0f, 0f, 0f, 0.45f);
         [SerializeField] private Color _onColor = new Color(1f, 0.6f, 0.15f, 0.9f);
 
@@ -26,6 +27,8 @@ namespace Car3C.Presentation
         [SerializeField] private string[] _rainLabels = { "RAIN", "DRIZZLE", "STORM" };
         [Tooltip("[0] = 꺼짐, [1..] = 눈 단계별 이름")]
         [SerializeField] private string[] _snowLabels = { "SNOW", "LIGHT", "BIG SNOW", "BLIZZARD" };
+        [Tooltip("노면 텍스처 종류별 이름(개수 = 종류 수, WeatherSurfaceView의 노면 종류 순서와 같게)")]
+        [SerializeField] private string[] _roadLabels = { "ROAD 1" };
 
         private EnvironmentController _environment;
 
@@ -37,6 +40,7 @@ namespace Car3C.Presentation
             _snowButton.onClick.AddListener(_environment.CycleSnow);
             _nightButton.onClick.AddListener(_environment.ToggleNight);
             if (_rainbowButton != null) _rainbowButton.onClick.AddListener(_environment.ToggleRainbowRoad);
+            if (_roadButton != null) _roadButton.onClick.AddListener(CycleRoad);
             _environment.Changed += Refresh;
             Refresh();
         }
@@ -49,6 +53,7 @@ namespace Car3C.Presentation
             _snowButton.onClick.RemoveListener(_environment.CycleSnow);
             _nightButton.onClick.RemoveListener(_environment.ToggleNight);
             if (_rainbowButton != null) _rainbowButton.onClick.RemoveListener(_environment.ToggleRainbowRoad);
+            if (_roadButton != null) _roadButton.onClick.RemoveListener(CycleRoad);
             _environment.Changed -= Refresh;
         }
 
@@ -68,6 +73,12 @@ namespace Car3C.Presentation
             SetLabel(_snowButton, _snowLabels, weather == Weather.Snow ? level + 1 : 0);
             SetColor(_nightButton, _environment.IsNight);
             if (_rainbowButton != null) SetColor(_rainbowButton, _environment.IsRainbowRoad);
+            if (_roadButton != null) SetLabel(_roadButton, _roadLabels, _environment.RoadStyle);
+        }
+
+        private void CycleRoad()
+        {
+            if (_roadLabels.Length > 0) _environment.CycleRoadStyle(_roadLabels.Length);
         }
 
         private void SetColor(UnityEngine.UI.Button button, bool isOn)

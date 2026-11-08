@@ -17,6 +17,9 @@ namespace Car3C.Gameplay
         /// <summary>무지개 도로 모드. 날씨·밤낮과 독립적으로 켜고 끈다.</summary>
         public bool IsRainbowRoad { get; private set; }
 
+        /// <summary>노면 텍스처 종류(0부터). 날씨와 독립적이며 개수는 표현 쪽이 정한다.</summary>
+        public int RoadStyle { get; private set; }
+
         /// <summary>현재 날씨의 단계(0부터).</summary>
         public int Level => _levels[(int)Weather];
 
@@ -39,6 +42,21 @@ namespace Car3C.Gameplay
         public void ToggleRainbowRoad()
         {
             IsRainbowRoad = !IsRainbowRoad;
+            Changed?.Invoke();
+        }
+
+        /// <summary>노면 텍스처를 다음 종류로(count개를 돌아가며).</summary>
+        public void CycleRoadStyle(int count)
+        {
+            if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+            SetRoadStyle((RoadStyle + 1) % count);
+        }
+
+        public void SetRoadStyle(int style)
+        {
+            if (style < 0) throw new ArgumentOutOfRangeException(nameof(style));
+            if (RoadStyle == style) return;
+            RoadStyle = style;
             Changed?.Invoke();
         }
 

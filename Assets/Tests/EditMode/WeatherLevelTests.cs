@@ -62,6 +62,21 @@ namespace Car3C.Tests.EditMode
         }
 
         [Test]
+        public void RoadStyle_CyclesAndWraps_IndependentOfWeather()
+        {
+            var env = new EnvironmentController();
+            env.CycleRain();
+            Assert.AreEqual(0, env.RoadStyle);
+            env.CycleRoadStyle(3);
+            env.CycleRoadStyle(3);
+            Assert.AreEqual(2, env.RoadStyle);
+            env.CycleRoadStyle(3);
+            Assert.AreEqual(0, env.RoadStyle);
+            Assert.AreEqual(Weather.Rain, env.Weather);
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => env.CycleRoadStyle(0));
+        }
+
+        [Test]
         public void Set_RaisesChangedOnlyOnChange_AndRejectsBadLevel()
         {
             var env = new EnvironmentController();

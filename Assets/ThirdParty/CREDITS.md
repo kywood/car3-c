@@ -16,6 +16,7 @@ CC0 does not require attribution; credit is kept here voluntarily.
 |---|---|
 | PolyHaven/HDRI | lonely_road_afternoon_puresky, overcast_soil_puresky, rogland_clear_night, qwantani_noon_puresky, kloofendal_48d_partly_cloudy_puresky (2k .hdr) |
 | PolyHaven/Textures | asphalt_02, concrete_pavement, concrete_floor_02, aerial_grass_rock, concrete_wall_003, snow_02 (1k diffuse + normal GL) |
+| PolyHaven/Textures/Road | asphalt_pit_lane(적용), asphalt_02, asphalt_01, asphalt_04, asphalt_track — 2k diffuse + normal GL, 거칠기는 1k 매끈함 맵(_MetalSmooth)으로 변환. 다운로드 수 기준 상위 도로 텍스처 비교용 |
 
 All Poly Haven assets are CC0 (public domain); downloaded via api.polyhaven.com.
 

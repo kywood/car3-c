@@ -255,7 +255,7 @@ namespace Car3C.Presentation
             Shader.SetGlobalFloat(SnowCoverId, _environment.Weather == Weather.Snow && hasLevel ? level.SnowCover : 0f);
 
             DynamicGI.UpdateEnvironment();
-            if (_surfaces != null) _surfaces.Apply(_environment.Weather, _environment.IsRainbowRoad);
+            if (_surfaces != null) _surfaces.Apply(_environment.Weather, _environment.IsRainbowRoad, _environment.RoadStyle);
             UpdateEffects();
 
             for (int i = 0; i < _nightLights.Count; ++i) _nightLights[i].SetOn(isNight);

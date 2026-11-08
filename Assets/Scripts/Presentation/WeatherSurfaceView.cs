@@ -35,7 +35,23 @@ namespace Car3C.Presentation
             }
         }
 
+        /// <summary>노면 텍스처 종류: 맑을 때 재질과 비 올 때(물웅덩이) 재질. 눈·무지개는 종류와 상관없이 같다.</summary>
+        [Serializable]
+        private struct RoadStyle
+        {
+            [SerializeField] private string _name;
+            [SerializeField] private Material _dry;
+            [SerializeField] private Material _wet;
+
+            public Material Dry => _dry;
+            public Material Wet => _wet;
+        }
+
         [SerializeField] private SurfaceVariant[] _variants = Array.Empty<SurfaceVariant>();
+        [Tooltip("노면 텍스처 종류. _styledVariant 항목(차도 노면)의 맑음·비 재질을 대신한다")]
+        [SerializeField] private RoadStyle[] _roadStyles = Array.Empty<RoadStyle>();
+        [Tooltip("_variants 중 노면 종류를 적용할 항목 번호(차도 아스팔트). -1이면 쓰지 않음")]
+        [SerializeField] private int _styledVariant = -1;
         [SerializeField] private Transform[] _roots = Array.Empty<Transform>();
         [SerializeField] private float _rainbowFlowSpeed = 0.35f;
 
@@ -49,6 +65,9 @@ namespace Car3C.Presentation
         private bool _rainbowActive;
         private float _rainbowOffset;
         private Weather _weather;
+        private int _roadStyle;
+
+        public int RoadStyleCount => _roadStyles.Length;
         private TunnelSchedule _tunnels;
         private Transform _tunnelFloorRoot;
         private double _distance;
@@ -106,10 +125,11 @@ namespace Car3C.Presentation
                 if (_variants[v].Rainbow != null) _rainbowInstances[v] = new Material(_variants[v].Rainbow);
         }
 
-        public void Apply(Weather weather, bool rainbowRoad)
+        public void Apply(Weather weather, bool rainbowRoad, int roadStyle = 0)
         {
             _weather = weather;
             _rainbowActive = rainbowRoad;
+            _roadStyle = _roadStyles.Length > 0 ? Mathf.Clamp(roadStyle, 0, _roadStyles.Length - 1) : 0;
             for (int i = 0; i < _renderers.Count; ++i) SetMaterial(i, weather);
             RefreshTunnelFloor();
         }
@@ -131,7 +151,7 @@ namespace Car3C.Presentation
         private void SetMaterial(int i, Weather weather)
         {
             int v = _variantIndices[i];
-            Material target = _rainbowActive && _rainbowInstances[v] != null ? _rainbowInstances[v] : _variants[v].For(weather);
+            Material target = _rainbowActive && _rainbowInstances[v] != null ? _rainbowInstances[v] : MaterialFor(v, weather);
             Renderer renderer = _renderers[i];
             int slot = _slots[i];
             if (slot == 0)
@@ -144,6 +164,17 @@ namespace Car3C.Presentation
             if (slot >= materials.Length || materials[slot] == target) return;
             materials[slot] = target;
             renderer.sharedMaterials = materials;
+        }
+
+        private Material MaterialFor(int variant, Weather weather)
+        {
+            if (variant == _styledVariant && _roadStyles.Length > 0 && weather != Weather.Snow)
+            {
+                RoadStyle style = _roadStyles[_roadStyle];
+                Material styled = weather == Weather.Rain ? style.Wet : style.Dry;
+                if (styled != null) return styled;
+            }
+            return _variants[variant].For(weather);
         }
 
         private void Update()
