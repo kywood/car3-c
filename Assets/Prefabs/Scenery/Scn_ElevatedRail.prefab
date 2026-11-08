@@ -194,7 +194,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2404381182725623308}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 8a0582a399c3a1f4a9223399c9b122ca, type: 2}
 --- !u!23 &419137956152297826
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -444,7 +444,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6246932090656136428}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 8a0582a399c3a1f4a9223399c9b122ca, type: 2}
 --- !u!23 &7592569352789102970
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -566,7 +566,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8014162640160286510}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: caa48c76a4f31234a84cf652cb38f411, type: 2}
 --- !u!23 &3141135137585175465
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -664,6 +664,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 344f6ac657dfeb940a21e71d4a53e383, type: 2}
+    - target: {fileID: -7511558181221131132, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c14dcdf8992c4944d95d7e9145572bc5, type: 2}
     - target: {fileID: 919132149155446097, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
       propertyPath: m_Name
       value: RailwayTrack_Straight
@@ -726,6 +734,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 344f6ac657dfeb940a21e71d4a53e383, type: 2}
+    - target: {fileID: -7511558181221131132, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c14dcdf8992c4944d95d7e9145572bc5, type: 2}
     - target: {fileID: 919132149155446097, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
       propertyPath: m_Name
       value: RailwayTrack_Straight

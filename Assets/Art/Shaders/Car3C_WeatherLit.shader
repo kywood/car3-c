@@ -191,6 +191,8 @@ Shader "Car3C/WeatherLit"
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #pragma shader_feature_local _ CAR3C_BEND_WATER_LEVEL  // Car3C: 바다 위 물체(배)는 해수면 유지
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitForwardPass.hlsl"
             #include "Assets/Art/Shaders/Car3C_WeatherSurface.hlsl"
 
@@ -287,6 +289,8 @@ Shader "Car3C/WeatherLit"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #pragma shader_feature_local _ CAR3C_BEND_WATER_LEVEL  // Car3C: 바다 위 물체(배)는 해수면 유지
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
             #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
             ENDHLSL
         }
@@ -377,6 +381,8 @@ Shader "Car3C/WeatherLit"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #pragma shader_feature_local _ CAR3C_BEND_WATER_LEVEL  // Car3C: 바다 위 물체(배)는 해수면 유지
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitGBufferPass.hlsl"
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GBufferOutputFormat.hlsl"
             ENDHLSL
@@ -422,6 +428,8 @@ Shader "Car3C/WeatherLit"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #pragma shader_feature_local _ CAR3C_BEND_WATER_LEVEL  // Car3C: 바다 위 물체(배)는 해수면 유지
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
             ENDHLSL
         }
@@ -477,6 +485,8 @@ Shader "Car3C/WeatherLit"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #pragma shader_feature_local _ CAR3C_BEND_WATER_LEVEL  // Car3C: 바다 위 물체(배)는 해수면 유지
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitDepthNormalsPass.hlsl"
             ENDHLSL
         }
@@ -516,6 +526,8 @@ Shader "Car3C/WeatherLit"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #pragma shader_feature_local _ CAR3C_BEND_WATER_LEVEL  // Car3C: 바다 위 물체(배)는 해수면 유지
+            #include "Assets/Art/Shaders/Car3C_Bend.hlsl"  // Car3C: 도로 굴곡
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitMetaPass.hlsl"
 
             ENDHLSL

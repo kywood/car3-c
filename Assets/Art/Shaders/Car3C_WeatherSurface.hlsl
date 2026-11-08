@@ -39,7 +39,12 @@ float Car3CNoise(float2 p, float periodZ)
 
 float2 Car3CRoadCoord(float3 positionWS)
 {
-    return float2(positionWS.x, positionWS.z + _Car3CRoadFlow);
+    // 좌우 굴곡으로 옮겨진 x를 되돌려 무늬가 도로에 붙어 있게 한다.
+    float x = positionWS.x;
+#ifdef CAR3C_BEND_INCLUDED
+    x -= Car3CBendOffset(positionWS.z).x;
+#endif
+    return float2(x, positionWS.z + _Car3CRoadFlow);
 }
 
 // 빗방울 파문 한 겹. 칸마다 한 방울이 떨어져 원이 퍼진다. 반환 = 노면 기울기(xz).

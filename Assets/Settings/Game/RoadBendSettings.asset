@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebcf4d6b39da3643943b5f21b1e827a, type: 3}
+  m_Name: RoadBendSettings
+  m_EditorClassIdentifier: Car3C::Car3C.Gameplay.RoadBendSettings
+  _verticalStrength: 1
+  _verticalAmplitudes:
+  - 3
+  - 5
+  - 8
+  - 0
+  _verticalWavelengths:
+  - 260
+  - 470
+  - 830
+  - 0
+  _lateralStrength: 1
+  _lateralAmplitudes:
+  - 10
+  - 18
+  - 0
+  - 0
+  _lateralWavelengths:
+  - 520
+  - 910
+  - 0
+  - 0
+  _seed: 7

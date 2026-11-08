@@ -448,7 +448,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8914343523862878642}
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 0001766b563024e43aec55a084acec83, type: 2}
 --- !u!23 &3195121975015717027
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -546,6 +546,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 89994b49d6cc81a49a331da8ecd12e48, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dbd8e65e5efa33f42ad1b8cd0697651e, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 89994b49d6cc81a49a331da8ecd12e48, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b12ee64cd0aaa2458491b381c9916d2, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 89994b49d6cc81a49a331da8ecd12e48, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 96786832be0a22948b7897b3216fd730, type: 2}
     - target: {fileID: 919132149155446097, guid: 89994b49d6cc81a49a331da8ecd12e48, type: 3}
       propertyPath: m_Name
       value: Streetlight_Single

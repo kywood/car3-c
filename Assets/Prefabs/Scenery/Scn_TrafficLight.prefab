@@ -133,6 +133,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2af555a33b9352a4da641e34761c138e, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8899e0861c97b484e957452ac8c740ad, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3f54a6870136e4c4fb8f26d4db166c0f, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 008f0505687ce5f4780917a93e66bf90, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ee74d7bac12317145902c6e85d2414aa, type: 2}
     - target: {fileID: 919132149155446097, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
       propertyPath: m_Name
       value: TrafficLight_2

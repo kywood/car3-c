@@ -33,8 +33,8 @@ namespace Car3C.Tests.EditMode
             Assert.IsFalse(s.TryGetFlight(6 + 25, out _), "비행 사이 쉬는 시간");
             Assert.IsTrue(s.TryGetFlight(6 + 31, out SkyFlight next));
             Assert.AreEqual(mid.Index + 1, next.Index);
-            Assert.That(mid.Altitude, Is.InRange(55f, 90f));
-            Assert.That(mid.DistanceAhead, Is.InRange(330f, 420f));
+            Assert.That(mid.Altitude, Is.InRange(42f, 64f));
+            Assert.That(mid.DistanceAhead, Is.InRange(170f, 240f));
         }
     }
 }

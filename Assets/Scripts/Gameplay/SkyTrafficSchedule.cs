@@ -71,9 +71,9 @@ namespace Car3C.Gameplay
                 index,
                 (float)(local / FlightSeconds),
                 Hash(index, 1) < 0.5f,
-                // 카메라가 살짝 내려다봐 지평선 위 약 10°까지만 보이므로 멀리·낮게(지평선 바로 위) 지나간다.
-                55f + Hash(index, 2) * 35f,
-                330f + Hash(index, 3) * 90f,
+                // 카메라가 살짝 내려다봐 지평선 위 약 20°까지만 보이므로, 가까이(170~240m) 화면 위쪽에 크게 보이는 고도로 지나간다.
+                42f + Hash(index, 2) * 22f,
+                170f + Hash(index, 3) * 70f,
                 (Hash(index, 4) - 0.5f) * 30f);
             return true;
         }
