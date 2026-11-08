@@ -46,6 +46,9 @@ namespace Car3C.Bootstrap
         [Tooltip("선택: 가속 발판 표시")]
         [SerializeField] private BoostPadView _boostPads;
 
+        [Tooltip("최소 목표 프레임. 실제 목표는 이 값과 화면 주사율(90/120Hz 폰 등) 중 큰 값. 안드로이드는 지정하지 않으면 30으로 묶인다")]
+        [SerializeField] private int _targetFrameRate = 60;
+
         private DriveSimulation _simulation;
         private EnvironmentController _environment;
         private ViewModeController _viewMode;
@@ -65,6 +68,11 @@ namespace Car3C.Bootstrap
                 enabled = false;
                 return;
             }
+
+            // 모바일 기본값(30FPS 제한)을 풀어 목표 프레임으로 돌린다. 모바일은 vSync를 무시하므로 0으로 둔다.
+            QualitySettings.vSyncCount = 0;
+            int refresh = Mathf.RoundToInt((float)Screen.currentResolution.refreshRateRatio.value);
+            Application.targetFrameRate = Mathf.Max(_targetFrameRate, refresh);
 
             LaneLayout layout = _trackSettings.CreateLayout();
             _simulation = new DriveSimulation(layout, _trackSettings.InitialLane, _driveSettings.Config,
