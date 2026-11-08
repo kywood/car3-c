@@ -25,6 +25,7 @@ namespace Car3C.Infrastructure
         private float _pointerStartX;
         private float _pointerStartY;
         private bool _jumpRequested;
+        private bool _viewToggleRequested;
 
         /// <summary>UI 버튼(JUMP) 등에서 점프를 요청한다.</summary>
         public void RequestJump()
@@ -36,6 +37,19 @@ namespace Car3C.Infrastructure
         {
             if (!_jumpRequested) return false;
             _jumpRequested = false;
+            return true;
+        }
+
+        /// <summary>UI 버튼(VIEW)에서 시점 전환(추적 ↔ 운전석)을 요청한다.</summary>
+        public void RequestViewToggle()
+        {
+            _viewToggleRequested = true;
+        }
+
+        public bool TryConsumeViewToggle()
+        {
+            if (!_viewToggleRequested) return false;
+            _viewToggleRequested = false;
             return true;
         }
 
@@ -62,6 +76,7 @@ namespace Car3C.Infrastructure
             _pending.Clear();
             _isPointerTracking = false;
             _jumpRequested = false;
+            _viewToggleRequested = false;
         }
 
         private void ReadKeyboard(Keyboard keyboard)
@@ -70,6 +85,7 @@ namespace Car3C.Infrastructure
             if (keyboard.leftArrowKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame) Enqueue(-1);
             if (keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame) Enqueue(1);
             if (keyboard.spaceKey.wasPressedThisFrame || keyboard.upArrowKey.wasPressedThisFrame || keyboard.wKey.wasPressedThisFrame) _jumpRequested = true;
+            if (keyboard.cKey.wasPressedThisFrame || keyboard.vKey.wasPressedThisFrame) _viewToggleRequested = true;
         }
 
         private void ReadPointer(Pointer pointer)

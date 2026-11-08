@@ -41,9 +41,11 @@ namespace Car3C.Bootstrap
 
         private DriveSimulation _simulation;
         private EnvironmentController _environment;
+        private ViewModeController _viewMode;
 
         public DriveSimulation Simulation => _simulation;
         public EnvironmentController Environment => _environment;
+        public ViewModeController ViewMode => _viewMode;
 
         private void Awake()
         {
@@ -64,7 +66,8 @@ namespace Car3C.Bootstrap
             _vehicle.Initialize(_simulation);
             _road.Initialize(layout, _simulation.Speed);
             _traffic.Initialize(_simulation.Traffic);
-            _followCamera.Initialize(_vehicle.transform, _simulation.Speed);
+            _viewMode = new ViewModeController();
+            _followCamera.Initialize(_vehicle.transform, _simulation.Speed, _viewMode);
             _hud.Initialize(_simulation);
             _scenery.Initialize(_simulation.Speed);
             if (_railTrain != null) _railTrain.Initialize(_simulation.Speed);
@@ -107,6 +110,7 @@ namespace Car3C.Bootstrap
             }
 
             if (_input.TryConsumeJump()) _simulation.RequestJump();
+            if (_input.TryConsumeViewToggle()) _viewMode.Toggle();
 
             _simulation.Tick(Time.deltaTime);
         }

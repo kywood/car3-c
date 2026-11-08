@@ -74,6 +74,7 @@
 - 고가 경전철은 항구 구간에만: `RailRoute`(곡선 노선) + `RailLineView`.
 - 점프: `JumpMotion`(순수), Space/W/↑, 위로 스와이프, JUMP 버튼. 공중에서는 차량 위를 넘어가며 근접 추월로 계산.
 - 충돌한 교통 차량은 돌며 깜빡이다 `CrashRemoveSeconds` 뒤 사라진다.
+- 시점: `ViewModeController`(순수, 추적 ↔ 운전석), VIEW 버튼·C/V 키. `FollowCamera`가 차량 Visual 아래 `CockpitAnchor`로 부드럽게 이동하고 운전석에서만 `CockpitInterior`(독자 디자인 계기판·운전대·기둥)를 켠다.
 
 ## 렌더링·환경 (실사풍)
 - 재질: Poly Haven CC0 PBR 텍스처, 하늘: Poly Haven HDRI(맑음/흐림/밤) + `Skybox/Panoramic`.
