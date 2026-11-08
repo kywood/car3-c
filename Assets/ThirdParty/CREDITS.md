@@ -14,7 +14,7 @@ CC0 does not require attribution; credit is kept here voluntarily.
 ## Poly Haven (polyhaven.com) — CC0 1.0
 | Folder | Assets |
 |---|---|
-| PolyHaven/HDRI | lonely_road_afternoon_puresky, overcast_soil_puresky, rogland_clear_night (2k .hdr) |
+| PolyHaven/HDRI | lonely_road_afternoon_puresky, overcast_soil_puresky, rogland_clear_night, qwantani_noon_puresky, kloofendal_48d_partly_cloudy_puresky (2k .hdr) |
 | PolyHaven/Textures | asphalt_02, concrete_pavement, concrete_floor_02, aerial_grass_rock, concrete_wall_003, snow_02 (1k diffuse + normal GL) |
 
 All Poly Haven assets are CC0 (public domain); downloaded via api.polyhaven.com.
