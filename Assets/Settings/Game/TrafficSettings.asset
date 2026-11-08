@@ -27,4 +27,6 @@ MonoBehaviour:
     _carWidth: 2
     _hitboxScale: 0.9
     _nearMissLateralDistance: 3.6
-    _nearMissLongitudinalMargin: 1
+    _nearMissLongitudinalMargin: 6
+    _crashRemoveSeconds: 1.2
+    _jumpClearHeight: 1.3

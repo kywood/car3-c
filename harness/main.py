@@ -8,6 +8,7 @@ from core.coding_agent import CodingAgent
 from core.validator import UnityValidator
 from core.review_manager import ReviewManager
 from core.git_manager import GitManager
+from core.github_issue_manager import GitHubIssueManager, Issue
 
 from slack_reporter import (
     send_message,
@@ -193,10 +194,10 @@ def run_development(task: str, review: ReviewManager) -> bool:
     return True
 
 
-def prepare_git_branch(git: GitManager, task: str) -> str:
-    """TODO마다 고유한 작업 브랜치를 준비."""
+def prepare_git_branch(git: GitManager, task: str, issue: Issue) -> str:
+    """이슈마다 고유한 작업 브랜치(feature/issue-<번호>-...)를 준비하고 원격에 올린다."""
 
-    branch = git.branch_for_task(task)
+    branch = git.branch_for_issue(issue.number, task)
 
     # 다른 작업의 변경 사항을 보호
     current = git.current_branch()
@@ -212,6 +213,10 @@ def prepare_git_branch(git: GitManager, task: str) -> str:
     if git.current_branch() != branch:
         raise RuntimeError("Git 브랜치 전환 실패")
 
+    # 작업 시작 시점에 브랜치를 GitHub에 올려 이슈와 연결한다.
+    if not git.remote_branch_exists(branch):
+        git.push()
+
     return branch
 
 
@@ -219,21 +224,34 @@ def save_to_git(
     git: GitManager,
     task: str,
     branch: str,
+    issue: Issue,
+    issues: GitHubIssueManager,
 ):
-    """승인된 작업을 Commit + Push."""
+    """승인된 작업을 Commit + Push. 커밋에 이슈 번호를 남겨 main 머지 시 이슈가 닫히게 한다."""
 
     if git.current_branch() != branch:
         raise RuntimeError("작업 중 Git 브랜치가 변경됐습니다.")
 
-    message = f"feat: complete Unity TODO {branch.split('/')[-1]}"
+    message = (
+        f"feat: {issue.title} (#{issue.number})\n\n"
+        f"Closes #{issue.number}"
+    )
 
     committed = git.commit(message)
 
     # 변경 파일이 없더라도 브랜치 Push
     git.push()
 
+    issues.comment(
+        issue.number,
+        f"✅ 작업 완료, 브랜치 `{branch}`에 Push했습니다. "
+        f"(새 커밋: {'있음' if committed else '없음'})\n"
+        "main 머지는 사용자 승인 후 진행합니다.",
+    )
+
     notify(
         f"📦 GitHub Push 완료\n"
+        f"이슈: #{issue.number} {issue.url}\n"
         f"브랜치: {branch}\n"
         f"TODO: {task}\n"
         f"새 커밋: {'있음' if committed else '없음'}"
@@ -244,6 +262,7 @@ def main():
     print("=== Unity Claude AI Harness ===", flush=True)
 
     git = GitManager(PROJECT_DIR)
+    issues = GitHubIssueManager(PROJECT_DIR)
     manager = TodoManager(BASE_DIR / "TODO.md")
     review = ReviewManager(BASE_DIR)
 
@@ -279,11 +298,16 @@ def main():
 
             task = todo.description
 
-            # 1. TODO별 Git 브랜치 준비
-            branch = prepare_git_branch(git, task)
+            # 1. 요청(TODO)마다 GitHub 이슈 + 작업 브랜치 준비
+            issue = issues.ensure_issue(task, source="harness/TODO.md")
+            branch = prepare_git_branch(git, task, issue)
+
+            if issue.created:
+                issues.comment(issue.number, f"🌿 작업 브랜치 `{branch}`를 만들어 Push했습니다.")
 
             notify(
                 f"📋 새로운 TODO\n"
+                f"이슈: #{issue.number} {issue.url}\n"
                 f"브랜치: {branch}\n"
                 f"작업: {task}"
             )
@@ -299,7 +323,7 @@ def main():
             manager.complete(todo)
 
             # 4. Commit + Push
-            save_to_git(git, task, branch)
+            save_to_git(git, task, branch, issue, issues)
 
             # 5. 다음 TODO로 반복
             print("다음 TODO 진행...", flush=True)

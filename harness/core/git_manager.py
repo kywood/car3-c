@@ -5,6 +5,16 @@ import subprocess
 from pathlib import Path
 
 
+UNITY_SERIALIZED_EXCLUDES = tuple(
+    f":(exclude)*.{ext}"
+    for ext in (
+        "unity", "prefab", "mat", "asset", "meta", "controller", "anim",
+        "overrideController", "physicMaterial", "mixer", "lighting", "playable",
+        "shadergraph", "shadersubgraph", "vfx", "inputactions",
+    )
+)
+
+
 class GitManager:
     def __init__(self, project_dir: Path):
         self.project_dir = project_dir.resolve()
@@ -53,6 +63,20 @@ class GitManager:
 
         return f"{prefix}/{slug}-{task_hash}"
 
+    def branch_for_issue(
+        self,
+        issue_number: int,
+        task: str,
+        prefix: str = "feature",
+    ) -> str:
+        """이슈 번호가 들어간 작업 브랜치 이름. 예: feature/issue-12-night-lights"""
+        text = re.sub(r"\(#\d+\)", "", task).lower()
+        slug = re.sub(r"[^a-z0-9]+", "-", text).strip("-")[:30].rstrip("-")
+        return f"{prefix}/issue-{issue_number}" + (f"-{slug}" if slug else "")
+
+    def remote_branch_exists(self, branch: str) -> bool:
+        return bool(self._git("ls-remote", "--heads", "origin", branch))
+
     def prepare_branch(self, branch: str) -> str:
         current = self.current_branch()
 
@@ -87,7 +111,8 @@ class GitManager:
             return False
 
         self._git("add", "-A")
-        self._git("diff", "--cached", "--check")
+        # Unity가 저장하는 YAML(.mat, .unity 등)에는 줄 끝 공백이 정상적으로 들어가므로 공백 검사에서 제외한다.
+        self._git("diff", "--cached", "--check", "--", ".", *UNITY_SERIALIZED_EXCLUDES)
         self._git("commit", "-m", message)
         return True
 
