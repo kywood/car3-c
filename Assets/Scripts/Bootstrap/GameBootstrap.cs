@@ -36,6 +36,8 @@ namespace Car3C.Bootstrap
         [SerializeField] private LaunchSiteController _launchSite;
         [Tooltip("선택: 항구 바다 물결 흐름")]
         [SerializeField] private SeaView _sea;
+        [Tooltip("선택: 가속 발판 표시")]
+        [SerializeField] private BoostPadView _boostPads;
 
         private DriveSimulation _simulation;
         private EnvironmentController _environment;
@@ -68,6 +70,7 @@ namespace Car3C.Bootstrap
             if (_railTrain != null) _railTrain.Initialize(_simulation.Speed);
             _farScenery.Initialize(_simulation.Speed);
             if (_sea != null) _sea.Initialize(_simulation.Speed);
+            if (_boostPads != null) _boostPads.Initialize(_simulation.BoostPads, _simulation.Speed);
 
             _environment = new EnvironmentController();
             var nightLights = new List<NightLight>(_scenery.NightLights);

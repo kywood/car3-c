@@ -26,6 +26,19 @@ namespace Car3C.Gameplay
         [SerializeField] private float _jumpHeight = 2.6f;
         [SerializeField] private float _jumpDuration = 0.9f;
 
+        [Header("Boost Pads")]
+        [SerializeField] private float _boostPadSpeedGain = 12f;
+        [SerializeField] private float _boostPadFirstDistance = 120f;
+        [SerializeField] private float _boostPadSpacing = 200f;
+        [SerializeField] private float _boostPadLength = 6f;
+        [SerializeField] private float _boostPadJitter = 40f;
+
+        /// <summary>가속 발판을 밟았을 때 더해지는 속도(m/s).</summary>
+        public float BoostPadSpeedGain => _boostPadSpeedGain;
+        public float BoostPadFirstDistance => _boostPadFirstDistance;
+        public float BoostPadSpacing => _boostPadSpacing;
+        public float BoostPadLength => _boostPadLength;
+        public float BoostPadJitter => _boostPadJitter;
         public float JumpHeight => _jumpHeight;
         public float JumpDuration => _jumpDuration;
         public float BaseSpeed => _baseSpeed;

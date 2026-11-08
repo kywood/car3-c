@@ -31,10 +31,30 @@ namespace Car3C.Presentation
             _appliedScreen = new Vector2Int(Screen.width, Screen.height);
             if (Screen.width <= 0 || Screen.height <= 0) return;
 
-            _rect.anchorMin = new Vector2(area.xMin / Screen.width, area.yMin / Screen.height);
-            _rect.anchorMax = new Vector2(area.xMax / Screen.width, area.yMax / Screen.height);
+            Rect normalized = Normalize(area, Screen.width, Screen.height);
+            _rect.anchorMin = normalized.min;
+            _rect.anchorMax = normalized.max;
             _rect.offsetMin = Vector2.zero;
             _rect.offsetMax = Vector2.zero;
+        }
+
+        /// <summary>
+        /// 안전 영역을 0~1 비율로 바꾼다. 에뮬레이터 등이 화면 밖·0 크기·회전 전 좌표 같은 비정상 값을 주면
+        /// HUD가 사라지지 않도록 전체 화면(0~1)을 쓴다.
+        /// </summary>
+        public static Rect Normalize(Rect safeArea, float screenWidth, float screenHeight)
+        {
+            Rect full = new Rect(0f, 0f, 1f, 1f);
+            if (screenWidth <= 0f || screenHeight <= 0f) return full;
+
+            float xMin = safeArea.xMin / screenWidth, xMax = safeArea.xMax / screenWidth;
+            float yMin = safeArea.yMin / screenHeight, yMax = safeArea.yMax / screenHeight;
+            bool finite = !(float.IsNaN(xMin) || float.IsNaN(xMax) || float.IsNaN(yMin) || float.IsNaN(yMax));
+            bool inside = xMin >= -0.01f && yMin >= -0.01f && xMax <= 1.01f && yMax <= 1.01f;
+            bool bigEnough = xMax - xMin >= 0.6f && yMax - yMin >= 0.6f;
+            if (!finite || !inside || !bigEnough) return full;
+
+            return Rect.MinMaxRect(Mathf.Clamp01(xMin), Mathf.Clamp01(yMin), Mathf.Clamp01(xMax), Mathf.Clamp01(yMax));
         }
     }
 }

@@ -66,6 +66,13 @@ namespace Car3C.Gameplay
             _speed = Math.Min(_config.MaxSpeed, _speed + boost);
         }
 
+        /// <summary>가속 발판 등 즉시 가속. 최고 속도를 넘지 않는다. 콤보에는 영향이 없다.</summary>
+        public void ApplyBoost(float speedGain)
+        {
+            if (speedGain <= 0f) return;
+            _speed = Math.Min(_config.MaxSpeed, _speed + speedGain);
+        }
+
         /// <summary>무적 상태면 무시하고 false를 반환한다.</summary>
         public bool ApplyCollision()
         {
