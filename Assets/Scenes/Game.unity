@@ -3912,6 +3912,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: 653644946}
   m_ActionId: 44b200b1-1557-4083-816c-b22cbdf77ddf
+--- !u!1 &418127853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 418127855}
+  - component: {fileID: 418127854}
+  m_Layer: 0
+  m_Name: RainGradeVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &418127854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418127853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 1
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: c68894d5633aa97429249f196404bcd2, type: 2}
+--- !u!4 &418127855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418127853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &421953696
 GameObject:
   m_ObjectHideFlags: 0
@@ -7877,6 +7926,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756729035}
   m_CullTransparentMesh: 1
+--- !u!1 &803899497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 803899498}
+  - component: {fileID: 803899500}
+  - component: {fileID: 803899499}
+  m_Layer: 0
+  m_Name: WetStreak_R
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &803899498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803899497}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.63837075, y: 0.035, z: -5.706707}
+  m_LocalScale: {x: 0.9, y: 7, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1463470039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &803899499
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803899497}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2a871079c877f084c96e974216c9eb84, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &803899500
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803899497}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &803940564
 GameObject:
   m_ObjectHideFlags: 0
@@ -8089,6 +8228,96 @@ Transform:
   m_Children: []
   m_Father: {fileID: 46743099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &850211305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 850211306}
+  - component: {fileID: 850211308}
+  - component: {fileID: 850211307}
+  m_Layer: 0
+  m_Name: WetStreak_L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &850211306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850211305}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.63837075, y: 0.035, z: -5.706707}
+  m_LocalScale: {x: 0.9, y: 7, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1463470039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &850211307
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850211305}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2a871079c877f084c96e974216c9eb84, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &850211308
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850211305}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &851069807
 GameObject:
   m_ObjectHideFlags: 0
@@ -12371,6 +12600,8 @@ Transform:
   - {fileID: 1209880833}
   - {fileID: 211085763}
   - {fileID: 818769399}
+  - {fileID: 850211306}
+  - {fileID: 803899498}
   m_Father: {fileID: 4632323721427020953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1548725004
@@ -18465,6 +18696,7 @@ MonoBehaviour:
     _scrollFactor: 1
   _extraNightLights:
   - {fileID: 4632323721427020954}
+  _rainGrade: {fileID: 418127853}
   _dayClear:
     _sky: {fileID: 2100000, guid: 5e5a3756d573f454eae0e7cc67af5532, type: 2}
     _sunColor: {r: 1, g: 0.93, b: 0.82, a: 1}
@@ -18477,9 +18709,9 @@ MonoBehaviour:
   _dayRain:
     _sky: {fileID: 2100000, guid: fbd1144fc6638ac499235dcb741385ec, type: 2}
     _sunColor: {r: 0.78, g: 0.8, b: 0.84, a: 1}
-    _sunIntensity: 0.15
-    _ambientIntensity: 1.35
-    _reflectionIntensity: 1
+    _sunIntensity: 0.45
+    _ambientIntensity: 0.85
+    _reflectionIntensity: 0.9
     _fogColor: {r: 0.48, g: 0.51, b: 0.55, a: 1}
     _fogStart: 15
     _fogEnd: 170
@@ -18532,6 +18764,9 @@ MonoBehaviour:
     _particleSizeScale: 1
     _particleFallScale: 1
     _windX: 0
+    _rainIntensity: 0
+    _puddleAmount: 0
+    _snowCover: 0
   - _weather: 0
     _level: 1
     _daySky: {fileID: 2100000, guid: d00acff9fc5f5764886bfe8c263d7910, type: 2}
@@ -18544,30 +18779,39 @@ MonoBehaviour:
     _particleSizeScale: 1
     _particleFallScale: 1
     _windX: 0
+    _rainIntensity: 0
+    _puddleAmount: 0
+    _snowCover: 0
   - _weather: 1
     _level: 0
     _daySky: {fileID: 0}
     _daySunElevation: 0
-    _sunScale: 1.8
-    _ambientScale: 1.1
+    _sunScale: 1.3
+    _ambientScale: 1.08
     _fogDistanceScale: 1.5
     _fogTint: {r: 0, g: 0, b: 0, a: 0}
     _particleRateScale: 0.3
     _particleSizeScale: 0.75
     _particleFallScale: 0.8
     _windX: 0
+    _rainIntensity: 0.35
+    _puddleAmount: 0.3
+    _snowCover: 0
   - _weather: 1
     _level: 1
     _daySky: {fileID: 0}
     _daySunElevation: 0
-    _sunScale: 0.5
-    _ambientScale: 0.75
+    _sunScale: 0.6
+    _ambientScale: 0.85
     _fogDistanceScale: 0.5
     _fogTint: {r: 0.3, g: 0.33, b: 0.37, a: 0.55}
     _particleRateScale: 1.8
     _particleSizeScale: 1.2
     _particleFallScale: 1.35
     _windX: 4
+    _rainIntensity: 1
+    _puddleAmount: 0.62
+    _snowCover: 0
   - _weather: 2
     _level: 0
     _daySky: {fileID: 0}
@@ -18580,6 +18824,9 @@ MonoBehaviour:
     _particleSizeScale: 1
     _particleFallScale: 1
     _windX: 0
+    _rainIntensity: 0
+    _puddleAmount: 0
+    _snowCover: 0.45
   - _weather: 2
     _level: 1
     _daySky: {fileID: 0}
@@ -18592,6 +18839,9 @@ MonoBehaviour:
     _particleSizeScale: 2.2
     _particleFallScale: 0.65
     _windX: 1.5
+    _rainIntensity: 0
+    _puddleAmount: 0
+    _snowCover: 0.8
   - _weather: 2
     _level: 2
     _daySky: {fileID: 2100000, guid: 06530ddd6f2b58540afa146b7631f0da, type: 2}
@@ -18604,6 +18854,9 @@ MonoBehaviour:
     _particleSizeScale: 1.6
     _particleFallScale: 1.6
     _windX: 7
+    _rainIntensity: 0
+    _puddleAmount: 0
+    _snowCover: 1
 --- !u!4 &2089566340
 Transform:
   m_ObjectHideFlags: 0
@@ -18633,11 +18886,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Car3C::Car3C.Presentation.WeatherSurfaceView
   _variants:
   - _dry: {fileID: 2100000, guid: f1d803eae177d484883ccd822f81a3a9, type: 2}
-    _wet: {fileID: 2100000, guid: a113f9c146a9502488798a651c67c957, type: 2}
+    _wet: {fileID: 2100000, guid: 062ffcd3a136ebe4d822a6b4e8f510b7, type: 2}
     _snow: {fileID: 2100000, guid: d86695b5f46b2bd448099756bc70d22a, type: 2}
     _rainbow: {fileID: 2100000, guid: a9b89c39d5d23da489a295b20d3f08e6, type: 2}
   - _dry: {fileID: 2100000, guid: b0e0da3cfa505284f8c694fe663bb012, type: 2}
-    _wet: {fileID: 2100000, guid: 1531887894f0bf54fb33b0292078b247, type: 2}
+    _wet: {fileID: 2100000, guid: d57e7917bce7f73489bf61bb47de72ba, type: 2}
     _snow: {fileID: 2100000, guid: a77f700d9fd33434eb0b86f89881047b, type: 2}
     _rainbow: {fileID: 0}
   - _dry: {fileID: 2100000, guid: 2972f15432559294dae0204bbcf063f6, type: 2}
@@ -18669,14 +18922,464 @@ MonoBehaviour:
     _snow: {fileID: 2100000, guid: 4c1e7a90b3d24f6a8e5b2c7d9f0a1b33, type: 2}
     _rainbow: {fileID: 0}
   - _dry: {fileID: 2100000, guid: 7d2f8b41c6e3405a9f1a3b5c7e9d0c41, type: 2}
-    _wet: {fileID: 2100000, guid: 7d2f8b41c6e3405a9f1a3b5c7e9d0c42, type: 2}
+    _wet: {fileID: 2100000, guid: f8fe72b9c260cde4f9986cd8c63124f8, type: 2}
     _snow: {fileID: 2100000, guid: 7d2f8b41c6e3405a9f1a3b5c7e9d0c43, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6477940958727351939, guid: 8d2a0f30ba20c96459b9700ba3abd758, type: 3}
+    _wet: {fileID: 2100000, guid: 44041a6071dde124e9042a65f77271f6, type: 2}
+    _snow: {fileID: 2100000, guid: 44041a6071dde124e9042a65f77271f6, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -1444460858095362738, guid: 8d2a0f30ba20c96459b9700ba3abd758, type: 3}
+    _wet: {fileID: 2100000, guid: 1da372c963b12dc4b9acdef16da39e4b, type: 2}
+    _snow: {fileID: 2100000, guid: 1da372c963b12dc4b9acdef16da39e4b, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 1137511093685017222, guid: 91aa5d8bf9dbd2c47b4546896d2e966f, type: 3}
+    _wet: {fileID: 2100000, guid: c1997dacdec9a6f4da363f727f7002d1, type: 2}
+    _snow: {fileID: 2100000, guid: c1997dacdec9a6f4da363f727f7002d1, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4770390735465466038, guid: 91aa5d8bf9dbd2c47b4546896d2e966f, type: 3}
+    _wet: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _snow: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2867747967464863736, guid: 91aa5d8bf9dbd2c47b4546896d2e966f, type: 3}
+    _wet: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _snow: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -5243988174349660497, guid: 91aa5d8bf9dbd2c47b4546896d2e966f, type: 3}
+    _wet: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _snow: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8848810374240701247, guid: 91aa5d8bf9dbd2c47b4546896d2e966f, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2588933649015344934, guid: 91aa5d8bf9dbd2c47b4546896d2e966f, type: 3}
+    _wet: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _snow: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4770390735465466038, guid: bc9c549c42bb8004b900901d16f32216, type: 3}
+    _wet: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _snow: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -5243988174349660497, guid: bc9c549c42bb8004b900901d16f32216, type: 3}
+    _wet: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _snow: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2867747967464863736, guid: bc9c549c42bb8004b900901d16f32216, type: 3}
+    _wet: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _snow: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8848810374240701247, guid: bc9c549c42bb8004b900901d16f32216, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2588933649015344934, guid: bc9c549c42bb8004b900901d16f32216, type: 3}
+    _wet: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _snow: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 3358427529709114468, guid: bc9c549c42bb8004b900901d16f32216, type: 3}
+    _wet: {fileID: 2100000, guid: 0d0df6ad05cf31f4495072dda7ae5fa0, type: 2}
+    _snow: {fileID: 2100000, guid: 0d0df6ad05cf31f4495072dda7ae5fa0, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4770390735465466038, guid: 8f068c757b9582446bc66941f275cc7c, type: 3}
+    _wet: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _snow: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8848810374240701247, guid: 8f068c757b9582446bc66941f275cc7c, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2867747967464863736, guid: 8f068c757b9582446bc66941f275cc7c, type: 3}
+    _wet: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _snow: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -5243988174349660497, guid: 8f068c757b9582446bc66941f275cc7c, type: 3}
+    _wet: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _snow: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2588933649015344934, guid: 8f068c757b9582446bc66941f275cc7c, type: 3}
+    _wet: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _snow: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 3358427529709114468, guid: 8f068c757b9582446bc66941f275cc7c, type: 3}
+    _wet: {fileID: 2100000, guid: 0d0df6ad05cf31f4495072dda7ae5fa0, type: 2}
+    _snow: {fileID: 2100000, guid: 0d0df6ad05cf31f4495072dda7ae5fa0, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 344372904661042070, guid: eb588b9bf44258144a0f68f153615fa2, type: 3}
+    _wet: {fileID: 2100000, guid: dacbeff2d5547f04983d322e43942a7a, type: 2}
+    _snow: {fileID: 2100000, guid: dacbeff2d5547f04983d322e43942a7a, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2867747967464863736, guid: eb588b9bf44258144a0f68f153615fa2, type: 3}
+    _wet: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _snow: {fileID: 2100000, guid: 34456f0d68c802646a281760553e9528, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4770390735465466038, guid: eb588b9bf44258144a0f68f153615fa2, type: 3}
+    _wet: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _snow: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2588933649015344934, guid: eb588b9bf44258144a0f68f153615fa2, type: 3}
+    _wet: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _snow: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -5243988174349660497, guid: eb588b9bf44258144a0f68f153615fa2, type: 3}
+    _wet: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _snow: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 344372904661042070, guid: 4de65bb5c480f964c835592654ce4cf1, type: 3}
+    _wet: {fileID: 2100000, guid: dacbeff2d5547f04983d322e43942a7a, type: 2}
+    _snow: {fileID: 2100000, guid: dacbeff2d5547f04983d322e43942a7a, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4770390735465466038, guid: 4de65bb5c480f964c835592654ce4cf1, type: 3}
+    _wet: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _snow: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2588933649015344934, guid: 4de65bb5c480f964c835592654ce4cf1, type: 3}
+    _wet: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _snow: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -5243988174349660497, guid: 4de65bb5c480f964c835592654ce4cf1, type: 3}
+    _wet: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _snow: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -9178522048780258386, guid: 0969fb6000039d34aaed73763b9f94ad, type: 3}
+    _wet: {fileID: 2100000, guid: 9f5e86801653c7c48b1ab21a335ecff9, type: 2}
+    _snow: {fileID: 2100000, guid: 9f5e86801653c7c48b1ab21a335ecff9, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 3358427529709114468, guid: 0969fb6000039d34aaed73763b9f94ad, type: 3}
+    _wet: {fileID: 2100000, guid: 0d0df6ad05cf31f4495072dda7ae5fa0, type: 2}
+    _snow: {fileID: 2100000, guid: 0d0df6ad05cf31f4495072dda7ae5fa0, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8848810374240701247, guid: 0969fb6000039d34aaed73763b9f94ad, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -5243988174349660497, guid: 0969fb6000039d34aaed73763b9f94ad, type: 3}
+    _wet: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _snow: {fileID: 2100000, guid: da4f34999771b3f469fbad540b416afb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4770390735465466038, guid: 0969fb6000039d34aaed73763b9f94ad, type: 3}
+    _wet: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _snow: {fileID: 2100000, guid: cfd9239e35214bb4b89576e5fa4b0653, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2588933649015344934, guid: 0969fb6000039d34aaed73763b9f94ad, type: 3}
+    _wet: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _snow: {fileID: 2100000, guid: e7af4ce6d199222428244cd49db1faae, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: 4df63c34f5457ea4680b2719f769e25b, type: 2}
+    _wet: {fileID: 2100000, guid: ed5e2555a1985b64b9d41f31d35df017, type: 2}
+    _snow: {fileID: 2100000, guid: ed5e2555a1985b64b9d41f31d35df017, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: ebfa3e4347163e942adf766a5b049be2, type: 2}
+    _wet: {fileID: 2100000, guid: c7e349d7c93e2774fbe9468d71003e1d, type: 2}
+    _snow: {fileID: 2100000, guid: c7e349d7c93e2774fbe9468d71003e1d, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: a21dfac8f9156e1449124dd52af79632, type: 2}
+    _wet: {fileID: 2100000, guid: 83fc5c599dc272046b1eae01cb5eb35e, type: 2}
+    _snow: {fileID: 2100000, guid: 83fc5c599dc272046b1eae01cb5eb35e, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: f5fd10789db7deb4ea8de8c0f52d9852, type: 2}
+    _wet: {fileID: 2100000, guid: 41111a7934ebde04dbfd9cf9891250ce, type: 2}
+    _snow: {fileID: 2100000, guid: 41111a7934ebde04dbfd9cf9891250ce, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: ab9ad50b117d7b14f9539501bd654aaa, type: 2}
+    _wet: {fileID: 2100000, guid: 1277703414d61754e93cffa20b65563e, type: 2}
+    _snow: {fileID: 2100000, guid: 1277703414d61754e93cffa20b65563e, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -1580535799172915004, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+    _wet: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _snow: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 6082360327707336341, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+    _wet: {fileID: 2100000, guid: 582eb5ed7a2133340bb6418bea1ff2e9, type: 2}
+    _snow: {fileID: 2100000, guid: 582eb5ed7a2133340bb6418bea1ff2e9, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4638008192267078544, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+    _wet: {fileID: 2100000, guid: 607d0248120b07a47b72e8253f6a8ee7, type: 2}
+    _snow: {fileID: 2100000, guid: 607d0248120b07a47b72e8253f6a8ee7, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -382652638819485698, guid: d3bcd303bf97a194c813ac9d0ecdfb9f, type: 3}
+    _wet: {fileID: 2100000, guid: d1ba6096f3434c346b6ca4f14b211c5b, type: 2}
+    _snow: {fileID: 2100000, guid: d1ba6096f3434c346b6ca4f14b211c5b, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -3155047780354543793, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
+    _wet: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _snow: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -1444460858095362738, guid: acb8c44500c52174faea4a36e06ba33b, type: 3}
+    _wet: {fileID: 2100000, guid: 1da372c963b12dc4b9acdef16da39e4b, type: 2}
+    _snow: {fileID: 2100000, guid: 1da372c963b12dc4b9acdef16da39e4b, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 2100000, guid: b42d7b3ce66039b408ca84df7290bdb1, type: 2}
+    _wet: {fileID: 2100000, guid: e28f3fc0f5d866f4d873f3c55b2551d5, type: 2}
+    _snow: {fileID: 2100000, guid: e28f3fc0f5d866f4d873f3c55b2551d5, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -382652638819485698, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+    _wet: {fileID: 2100000, guid: d1ba6096f3434c346b6ca4f14b211c5b, type: 2}
+    _snow: {fileID: 2100000, guid: d1ba6096f3434c346b6ca4f14b211c5b, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -1580535799172915004, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+    _wet: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _snow: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8848810374240701247, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 1137511093685017222, guid: 38941fb374a17d846b1fffb90b6d9f4b, type: 3}
+    _wet: {fileID: 2100000, guid: c1997dacdec9a6f4da363f727f7002d1, type: 2}
+    _snow: {fileID: 2100000, guid: c1997dacdec9a6f4da363f727f7002d1, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6477940958727351939, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+    _wet: {fileID: 2100000, guid: 44041a6071dde124e9042a65f77271f6, type: 2}
+    _snow: {fileID: 2100000, guid: 44041a6071dde124e9042a65f77271f6, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -3155047780354543793, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+    _wet: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _snow: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7622474143669932975, guid: c287c39791321a946a3fcb1b1f6f95fe, type: 3}
+    _wet: {fileID: 2100000, guid: 18a1708961106b84e8e7e865e23b62bc, type: 2}
+    _snow: {fileID: 2100000, guid: 18a1708961106b84e8e7e865e23b62bc, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6763429952983328885, guid: 88c82bf8735751d49b33e099660c9454, type: 3}
+    _wet: {fileID: 2100000, guid: b13d6ebdd5b9feb4993bf7859ecd731c, type: 2}
+    _snow: {fileID: 2100000, guid: b13d6ebdd5b9feb4993bf7859ecd731c, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2505642851634945670, guid: 89994b49d6cc81a49a331da8ecd12e48, type: 3}
+    _wet: {fileID: 2100000, guid: afa47e4ca71cd0e4c9bd544e8fd9b302, type: 2}
+    _snow: {fileID: 2100000, guid: afa47e4ca71cd0e4c9bd544e8fd9b302, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -1037066605476797796, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+    _wet: {fileID: 2100000, guid: c86575e031812fc43bf6d37f5df21a32, type: 2}
+    _snow: {fileID: 2100000, guid: c86575e031812fc43bf6d37f5df21a32, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2831834017272999540, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+    _wet: {fileID: 2100000, guid: 67c2b9b6bbadc4c4c911ec8645b02116, type: 2}
+    _snow: {fileID: 2100000, guid: 67c2b9b6bbadc4c4c911ec8645b02116, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 5654107615758483167, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+    _wet: {fileID: 2100000, guid: 614305a58cf19ee42aadffa188bdc0f3, type: 2}
+    _snow: {fileID: 2100000, guid: 614305a58cf19ee42aadffa188bdc0f3, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 644682847431532357, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+    _wet: {fileID: 2100000, guid: e8d73835a81df7544b07b31d4e30cd35, type: 2}
+    _snow: {fileID: 2100000, guid: e8d73835a81df7544b07b31d4e30cd35, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 5650376304965219397, guid: ad98b090ed5e1ab46b660aa623bf66d8, type: 3}
+    _wet: {fileID: 2100000, guid: 53cbc13b162614f4a9c2b5aa86d6eed6, type: 2}
+    _snow: {fileID: 2100000, guid: 53cbc13b162614f4a9c2b5aa86d6eed6, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4475726526372268450, guid: 404096efc81372b429c28b2c10ebdd2e, type: 3}
+    _wet: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _snow: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2030901756695967124, guid: 404096efc81372b429c28b2c10ebdd2e, type: 3}
+    _wet: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _snow: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7545107126016311957, guid: 404096efc81372b429c28b2c10ebdd2e, type: 3}
+    _wet: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _snow: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: 404096efc81372b429c28b2c10ebdd2e, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: 404096efc81372b429c28b2c10ebdd2e, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -7304215858169468783, guid: 404096efc81372b429c28b2c10ebdd2e, type: 3}
+    _wet: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _snow: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: 2e1c215b7db23cc42895981766c4b17a, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4362962105363994262, guid: 2e1c215b7db23cc42895981766c4b17a, type: 3}
+    _wet: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _snow: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: 2e1c215b7db23cc42895981766c4b17a, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4791275291853029351, guid: 2e1c215b7db23cc42895981766c4b17a, type: 3}
+    _wet: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _snow: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2379236638346977297, guid: 2e1c215b7db23cc42895981766c4b17a, type: 3}
+    _wet: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _snow: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2030901756695967124, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _snow: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7545107126016311957, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _snow: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -7304215858169468783, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _snow: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8493481264296265592, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 53923bae12449ad4eba0b0b8233a89df, type: 2}
+    _snow: {fileID: 2100000, guid: 53923bae12449ad4eba0b0b8233a89df, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4374767759926160521, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 1da9dfb39f6e8534fa3d05f0361eeb01, type: 2}
+    _snow: {fileID: 2100000, guid: 1da9dfb39f6e8534fa3d05f0361eeb01, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4475726526372268450, guid: 35c23f356b088844780812d5c1f5c6d0, type: 3}
+    _wet: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _snow: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2030901756695967124, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _snow: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7545107126016311957, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _snow: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -7304215858169468783, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _snow: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -8493481264296265592, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 53923bae12449ad4eba0b0b8233a89df, type: 2}
+    _snow: {fileID: 2100000, guid: 53923bae12449ad4eba0b0b8233a89df, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4374767759926160521, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 1da9dfb39f6e8534fa3d05f0361eeb01, type: 2}
+    _snow: {fileID: 2100000, guid: 1da9dfb39f6e8534fa3d05f0361eeb01, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4475726526372268450, guid: fa6d584d598a454459ca5db05bafdebc, type: 3}
+    _wet: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _snow: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4362962105363994262, guid: 3727fc48f29052d4997c925e9077f2bf, type: 3}
+    _wet: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _snow: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: 3727fc48f29052d4997c925e9077f2bf, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7211448773848044386, guid: 3727fc48f29052d4997c925e9077f2bf, type: 3}
+    _wet: {fileID: 2100000, guid: d1ba6096f3434c346b6ca4f14b211c5b, type: 2}
+    _snow: {fileID: 2100000, guid: d1ba6096f3434c346b6ca4f14b211c5b, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: 3727fc48f29052d4997c925e9077f2bf, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4791275291853029351, guid: 3727fc48f29052d4997c925e9077f2bf, type: 3}
+    _wet: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _snow: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2379236638346977297, guid: 3727fc48f29052d4997c925e9077f2bf, type: 3}
+    _wet: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _snow: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: 069ff5aebcb08464ea9b9a290635ee8d, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4362962105363994262, guid: 069ff5aebcb08464ea9b9a290635ee8d, type: 3}
+    _wet: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _snow: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7770318624900243041, guid: 069ff5aebcb08464ea9b9a290635ee8d, type: 3}
+    _wet: {fileID: 2100000, guid: a23da2e13e1c3c647a58b88530e52dc9, type: 2}
+    _snow: {fileID: 2100000, guid: a23da2e13e1c3c647a58b88530e52dc9, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: 069ff5aebcb08464ea9b9a290635ee8d, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4791275291853029351, guid: 069ff5aebcb08464ea9b9a290635ee8d, type: 3}
+    _wet: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _snow: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2379236638346977297, guid: 069ff5aebcb08464ea9b9a290635ee8d, type: 3}
+    _wet: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _snow: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4475726526372268450, guid: fa108d357475e5d418d60620c65782f4, type: 3}
+    _wet: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _snow: {fileID: 2100000, guid: 17abd4fa17a83264ea83466b1e1249e5, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2030901756695967124, guid: fa108d357475e5d418d60620c65782f4, type: 3}
+    _wet: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _snow: {fileID: 2100000, guid: 23372aed59dbe3c4ab9bea585191bdf2, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7545107126016311957, guid: fa108d357475e5d418d60620c65782f4, type: 3}
+    _wet: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _snow: {fileID: 2100000, guid: 08d8c5a973aca614cb7d9fe8b236f7eb, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: fa108d357475e5d418d60620c65782f4, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: fa108d357475e5d418d60620c65782f4, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -7304215858169468783, guid: fa108d357475e5d418d60620c65782f4, type: 3}
+    _wet: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _snow: {fileID: 2100000, guid: b81ef6c61772be443a4acd8515bf6d7d, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 7922251121040759823, guid: 6f03544c290d22e4e9a9db76049d244a, type: 3}
+    _wet: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _snow: {fileID: 2100000, guid: 73efe36b3871d9747a106edcbdb5fd41, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 4362962105363994262, guid: 6f03544c290d22e4e9a9db76049d244a, type: 3}
+    _wet: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _snow: {fileID: 2100000, guid: 2a390fa25be1b5f4aafeab44df9c8ecf, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: 1151844921754575795, guid: 6f03544c290d22e4e9a9db76049d244a, type: 3}
+    _wet: {fileID: 2100000, guid: afa47e4ca71cd0e4c9bd544e8fd9b302, type: 2}
+    _snow: {fileID: 2100000, guid: afa47e4ca71cd0e4c9bd544e8fd9b302, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -6111139067206785889, guid: 6f03544c290d22e4e9a9db76049d244a, type: 3}
+    _wet: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _snow: {fileID: 2100000, guid: 94793acbb4cbe314180e404f403b4a58, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -4791275291853029351, guid: 6f03544c290d22e4e9a9db76049d244a, type: 3}
+    _wet: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _snow: {fileID: 2100000, guid: b21aab16f08859e459f16bf295d25671, type: 2}
+    _rainbow: {fileID: 0}
+  - _dry: {fileID: -2379236638346977297, guid: 6f03544c290d22e4e9a9db76049d244a, type: 3}
+    _wet: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
+    _snow: {fileID: 2100000, guid: 6eca5b4511774c648a3d516542074464, type: 2}
     _rainbow: {fileID: 0}
   _roots:
   - {fileID: 329306167}
   - {fileID: 473009789}
   - {fileID: 134169343}
   - {fileID: 2088747133}
+  - {fileID: 1282966699}
+  - {fileID: 4632323721427020953}
   _rainbowFlowSpeed: -5
 --- !u!114 &2116038130
 MonoBehaviour:
@@ -18776,7 +19479,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 42
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -19043,3 +19746,4 @@ SceneRoots:
   - {fileID: 324249476}
   - {fileID: 1287637697}
   - {fileID: 46743099}
+  - {fileID: 418127855}

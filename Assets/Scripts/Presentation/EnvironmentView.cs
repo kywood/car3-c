@@ -12,6 +12,14 @@ namespace Car3C.Presentation
     public sealed class EnvironmentView : MonoBehaviour
     {
         private static readonly int SunGlintScaleId = Shader.PropertyToID("_Car3CSunGlintScale");
+        // Car3C_WeatherSurface.hlsl / Car3C_WetStreak.shader 전역 값.
+        private static readonly int RainIntensityId = Shader.PropertyToID("_Car3CRainIntensity");
+        private static readonly int PuddleAmountId = Shader.PropertyToID("_Car3CPuddleAmount");
+        private static readonly int SnowCoverId = Shader.PropertyToID("_Car3CSnowCover");
+        private static readonly int WetnessId = Shader.PropertyToID("_Car3CWetness");
+        private static readonly int RoadFlowId = Shader.PropertyToID("_Car3CRoadFlow");
+        /// <summary>셰이더 무늬가 z 방향으로 반복되는 길이(m). Car3C_WeatherSurface.hlsl의 CAR3C_FLOW_PERIOD와 같아야 한다.</summary>
+        private const double RoadFlowPeriod = 256d;
 
         [Serializable]
         private struct Look
@@ -72,7 +80,17 @@ namespace Car3C.Presentation
             [SerializeField] private float _particleFallScale;
             [Tooltip("옆바람(m/s, +x). 폭설 등에서 입자를 옆으로 날린다")]
             [SerializeField] private float _windX;
+            [Header("Surface (Car3C/WeatherLit)")]
+            [Tooltip("빗방울 파문 밀도 0~1")]
+            [SerializeField] private float _rainIntensity;
+            [Tooltip("노면 물웅덩이 양 0~1")]
+            [SerializeField] private float _puddleAmount;
+            [Tooltip("물체 위에 쌓인 눈 0~1")]
+            [SerializeField] private float _snowCover;
 
+            public float RainIntensity => _rainIntensity;
+            public float PuddleAmount => _puddleAmount;
+            public float SnowCover => _snowCover;
             public Weather Weather => _weather;
             public int Level => _level;
             public Material DaySky => _daySky;
@@ -104,6 +122,8 @@ namespace Car3C.Presentation
         [SerializeField] private WeatherSurfaceView _surfaces;
         [SerializeField] private WeatherEffect[] _effects = Array.Empty<WeatherEffect>();
         [SerializeField] private NightLight[] _extraNightLights = Array.Empty<NightLight>();
+        [Tooltip("비 올 때만 켜는 후처리 Volume 오브젝트(조금 어둡고 채도·대비 낮게, 차갑게)")]
+        [SerializeField] private GameObject _rainGrade;
 
         [Header("Looks")]
         [SerializeField] private Look _dayClear;
@@ -160,6 +180,7 @@ namespace Car3C.Presentation
             }
 
             if (_surfaces != null) _surfaces.UpdateTunnelFloor(_speed.Distance);
+            Shader.SetGlobalFloat(RoadFlowId, WaterFlow.GetOffset(_speed.Distance, RoadFlowPeriod));
 
             float speed = _speed.CurrentSpeed;
             for (int i = 0; i < _effects.Length; ++i)
@@ -225,6 +246,13 @@ namespace Car3C.Presentation
             }
 
             ApplyParticleLevel(hasLevel ? level : default, hasLevel);
+
+            bool isRain = _environment.Weather == Weather.Rain;
+            if (_rainGrade != null && _rainGrade.activeSelf != isRain) _rainGrade.SetActive(isRain);
+            Shader.SetGlobalFloat(RainIntensityId, isRain && hasLevel ? level.RainIntensity : 0f);
+            Shader.SetGlobalFloat(PuddleAmountId, isRain && hasLevel ? level.PuddleAmount : 0f);
+            Shader.SetGlobalFloat(WetnessId, isRain ? 1f : 0f);
+            Shader.SetGlobalFloat(SnowCoverId, _environment.Weather == Weather.Snow && hasLevel ? level.SnowCover : 0f);
 
             DynamicGI.UpdateEnvironment();
             if (_surfaces != null) _surfaces.Apply(_environment.Weather, _environment.IsRainbowRoad);

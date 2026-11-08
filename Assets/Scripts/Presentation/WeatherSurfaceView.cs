@@ -6,7 +6,8 @@ using UnityEngine;
 namespace Car3C.Presentation
 {
     /// <summary>
-    /// 날씨에 따라 바닥 재질을 바꾼다(맑음: 마른 노면, 비: 젖은 노면, 눈: 눈 덮인 노면).
+    /// 날씨에 따라 재질을 바꾼다(맑음: 마른 노면, 비: 젖은 노면·물웅덩이, 눈: 눈 덮인 노면·물체 위 쌓인 눈).
+    /// 렌더러의 모든 재질 슬롯이 대상이며, 등록된 '마른' 재질이 있는 슬롯만 바꾼다.
     /// 무지개 도로 모드에서는 무지개 재질이 있는 면(차도)을 무지개로 바꾸고 색을 흘려보낸다.
     /// 머티리얼 에셋은 수정하지 않는다. 무지개 색 흐름은 런타임 복제본에서만 움직인다.
     /// </summary>
@@ -39,7 +40,9 @@ namespace Car3C.Presentation
         [SerializeField] private float _rainbowFlowSpeed = 0.35f;
 
         private readonly List<Renderer> _renderers = new List<Renderer>(256);
+        private readonly List<int> _slots = new List<int>(256);
         private readonly List<int> _variantIndices = new List<int>(256);
+        private readonly Dictionary<Material, int> _variantByDry = new Dictionary<Material, int>();
         private readonly List<Renderer> _buffer = new List<Renderer>(512);
         private readonly List<int> _tunnelFloorIndices = new List<int>(64);
         private Material[] _rainbowInstances;
@@ -71,20 +74,29 @@ namespace Car3C.Presentation
         public void Collect()
         {
             _renderers.Clear();
+            _slots.Clear();
             _variantIndices.Clear();
             _tunnelFloorIndices.Clear();
+            _variantByDry.Clear();
+            for (int v = 0; v < _variants.Length; ++v)
+                if (_variants[v].Dry != null && !_variantByDry.ContainsKey(_variants[v].Dry)) _variantByDry.Add(_variants[v].Dry, v);
+
             for (int r = 0; r < _roots.Length; ++r)
             {
                 if (_roots[r] == null) continue;
                 _roots[r].GetComponentsInChildren(true, _buffer);
                 for (int i = 0; i < _buffer.Count; ++i)
                 {
-                    int variant = FindVariant(_buffer[i].sharedMaterial);
-                    if (variant < 0) continue;
-                    if (_tunnelFloorRoot != null && _buffer[i].transform.IsChildOf(_tunnelFloorRoot))
-                        _tunnelFloorIndices.Add(_renderers.Count);
-                    _renderers.Add(_buffer[i]);
-                    _variantIndices.Add(variant);
+                    Material[] materials = _buffer[i].sharedMaterials;
+                    bool isTunnelFloor = _tunnelFloorRoot != null && _buffer[i].transform.IsChildOf(_tunnelFloorRoot);
+                    for (int slot = 0; slot < materials.Length; ++slot)
+                    {
+                        if (materials[slot] == null || !_variantByDry.TryGetValue(materials[slot], out int variant)) continue;
+                        if (isTunnelFloor) _tunnelFloorIndices.Add(_renderers.Count);
+                        _renderers.Add(_buffer[i]);
+                        _slots.Add(slot);
+                        _variantIndices.Add(variant);
+                    }
                 }
             }
 
@@ -104,7 +116,8 @@ namespace Car3C.Presentation
 
         private void RefreshTunnelFloor()
         {
-            if (_tunnels == null || _weather != Weather.Snow) return;
+            // 터널 안은 비·눈이 닿지 않으므로 마른 노면으로 둔다.
+            if (_tunnels == null || _weather == Weather.Clear) return;
 
             for (int k = 0; k < _tunnelFloorIndices.Count; ++k)
             {
@@ -119,7 +132,18 @@ namespace Car3C.Presentation
         {
             int v = _variantIndices[i];
             Material target = _rainbowActive && _rainbowInstances[v] != null ? _rainbowInstances[v] : _variants[v].For(weather);
-            if (_renderers[i].sharedMaterial != target) _renderers[i].sharedMaterial = target;
+            Renderer renderer = _renderers[i];
+            int slot = _slots[i];
+            if (slot == 0)
+            {
+                if (renderer.sharedMaterial != target) renderer.sharedMaterial = target;
+                return;
+            }
+            // 여러 슬롯 렌더러: 다른 슬롯(야간 램프 교체 등)은 건드리지 않는다.
+            Material[] materials = renderer.sharedMaterials;
+            if (slot >= materials.Length || materials[slot] == target) return;
+            materials[slot] = target;
+            renderer.sharedMaterials = materials;
         }
 
         private void Update()
@@ -142,14 +166,6 @@ namespace Car3C.Presentation
             if (_rainbowInstances == null) return;
             for (int v = 0; v < _rainbowInstances.Length; ++v)
                 if (_rainbowInstances[v] != null) Destroy(_rainbowInstances[v]);
-        }
-
-        private int FindVariant(Material material)
-        {
-            if (material == null) return -1;
-            for (int v = 0; v < _variants.Length; ++v)
-                if (_variants[v].Dry == material) return v;
-            return -1;
         }
     }
 }
