@@ -79,6 +79,8 @@
 - 고가 경전철은 항구 구간에만: `RailRoute`(곡선 노선) + `RailLineView`.
 - 고속철도: 평지·발사장 구간 왼쪽(x -26) 지상 선로, `RailLineView`(Zone=Plain, `_departAhead`)로 노선이 230m 앞에 오면 마주 오는 열차가 한 번 스쳐 지나간다.
 - 우주 발사: `LaunchSiteSchedule.ShouldTriggerOnApproach` — 현재 속도로 이륙 순간 발사장이 약 80m 앞에 오도록 카운트다운 시작.
+- 세계 랜드마크(파일럿 연출): `LandmarkSchedule`(순수, 260m 간격으로 13종 차례로, 3380m 반복) + `LandmarkView`. 모델은 자체 제작(Blender 절차 모델링, `Assets/Art/Landmarks`, 자유의 여신상·에펠탑·궁궐 대문·오페라 하우스·오중탑·타지마할·쩨디·천단·빅벤·피사·브란덴부르크·피라미드) + Quaternius 풍차(네덜란드). 상업 출시 전 일부(시드니 오페라 하우스 등) 상표·초상권 검토 필요.
+- 자연·목장: Quaternius 나무·덤불·풀·바위를 무리별로 합친 프리팹(`Scn_TreeCluster*`, `Scn_GrassField*`), 목장 `Scn_Ranch`(울타리·헛간·사일로 합친 메시 + 소·양·말 Idle 애니메이션, `AnimatorRandomStart`). Scenery 지점 `Nature*`(평지·발사장·항구 구간).
 - 비행기: `SkyTrafficSchedule`(순수, 씨앗·시간으로 결정) + `AirplaneView`. 170~240m 앞, 고도 42~64m로 화면 위쪽을 지나간다(카메라 원거리 900m). 모델은 기수가 -z라 Model을 180° 돌려 둠.
 - 점프: `JumpMotion`(순수), Space/W/↑, 위로 스와이프, JUMP 버튼. 공중에서는 차량 위를 넘어가며 근접 추월로 계산.
 - 충돌한 교통 차량은 돌며 깜빡이다 `CrashRemoveSeconds` 뒤 사라진다.

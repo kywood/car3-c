@@ -35,6 +35,8 @@ namespace Car3C.Bootstrap
         [Tooltip("선택: 도로 굴곡(상하·좌우) 화면 효과")]
         [SerializeField] private RoadBendView _roadBend;
         [SerializeField] private RoadBendSettings _roadBendSettings;
+        [Tooltip("선택: 세계 랜드마크(각국 상징 조형)")]
+        [SerializeField] private LandmarkView _landmarks;
         [SerializeField] private SceneryView _farScenery;
         [SerializeField] private EnvironmentView _environmentView;
         [SerializeField] private EnvironmentButtonsView _environmentButtons;
@@ -45,6 +47,9 @@ namespace Car3C.Bootstrap
         [SerializeField] private SeaView _sea;
         [Tooltip("선택: 가속 발판 표시")]
         [SerializeField] private BoostPadView _boostPads;
+
+        [Tooltip("최소 목표 프레임. 실제 목표는 이 값과 화면 주사율(90/120Hz 폰 등) 중 큰 값. 안드로이드는 지정하지 않으면 30으로 묶인다")]
+        [SerializeField] private int _targetFrameRate = 60;
 
         private DriveSimulation _simulation;
         private EnvironmentController _environment;
@@ -65,6 +70,11 @@ namespace Car3C.Bootstrap
                 enabled = false;
                 return;
             }
+
+            // 모바일 기본값(30FPS 제한)을 풀어 목표 프레임으로 돌린다. 모바일은 vSync를 무시하므로 0으로 둔다.
+            QualitySettings.vSyncCount = 0;
+            int refresh = Mathf.RoundToInt((float)Screen.currentResolution.refreshRateRatio.value);
+            Application.targetFrameRate = Mathf.Max(_targetFrameRate, refresh);
 
             LaneLayout layout = _trackSettings.CreateLayout();
             _simulation = new DriveSimulation(layout, _trackSettings.InitialLane, _driveSettings.Config,
@@ -92,6 +102,7 @@ namespace Car3C.Bootstrap
             InitializeRailLine(_railLine);
             for (int i = 0; i < _extraRailLines.Length; ++i) InitializeRailLine(_extraRailLines[i]);
             if (_airplane != null) _airplane.Initialize(new SkyTrafficSchedule(System.Environment.TickCount));
+            if (_landmarks != null) _landmarks.Initialize(_simulation.Speed);
             if (_roadBend != null && _roadBendSettings != null)
                 _roadBend.Initialize(_roadBendSettings.CreateVertical(), _roadBendSettings.CreateLateral(), _simulation.Speed);
 
