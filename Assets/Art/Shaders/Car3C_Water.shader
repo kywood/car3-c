@@ -68,6 +68,9 @@ Shader "Car3C/Water"
             float _FlowOffset;
         CBUFFER_END
 
+        // 전역 값: 맑을 때 1, 비·눈일 때 0 (EnvironmentView가 설정). 흐린 날 해 반짝임을 없앤다.
+        float _Car3CSunGlintScale;
+
         struct DepthAttributes
         {
             float4 positionOS : POSITION;
@@ -225,7 +228,7 @@ Shader "Car3C/Water"
                 float3 halfDir = normalize(lightDir + viewDir);
                 float nDotH = saturate(dot(normalWS, halfDir));
                 float sharpness = lerp(_SunSharpness * 0.25, _SunSharpness, detail);
-                float glint = pow(nDotH, sharpness) * _SunIntensity * step(0.0, lightDir.y);
+                float glint = pow(nDotH, sharpness) * _SunIntensity * step(0.0, lightDir.y) * _Car3CSunGlintScale;
 
                 float3 color = lerp(body, reflection, fresnel) + glint * lightColor;
 

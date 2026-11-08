@@ -25,6 +25,10 @@ namespace Car3C.Presentation
         [SerializeField] private float _shoulderWidth = 3f;
         [SerializeField] private float _guardrailOffset = 0.5f;
         [SerializeField] private int _guardrailPostsPerSegment = 5;
+        [Tooltip("움직이는 도로 구간 너머(앞) 고정 도로가 이어지는 끝 z. 카메라 원거리 클립(420m)보다 조금 길게")]
+        [SerializeField] private float _farRoadEnd = 430f;
+        [Tooltip("움직이는 도로 구간 뒤쪽 고정 도로의 끝 z(음수). 0이면 만들지 않는다(게임 카메라는 뒤를 보지 않음)")]
+        [SerializeField] private float _farRoadBehind = 0f;
 
         private SpeedController _speed;
         private RoadScroller _scroller;
@@ -41,6 +45,13 @@ namespace Car3C.Presentation
             {
                 _segments[slot] = BuildSegment(layout, slot);
             }
+
+            // 움직이는 구간은 앞으로 약 (구간 수 - 뒤 구간 수) × 길이까지만 있다. 그 너머가 비어 보이지 않도록
+            // 고정된 단순 도로(노면·갓길·가장자리 선·가드레일 빔)를 앞뒤로 잇는다. 움직이는 구간과 겹치는 부분은 살짝 낮춰 가려지게 한다.
+            float aheadStart = (_segmentCount - _segmentsBehind - 1) * _segmentLength;
+            if (_farRoadEnd > aheadStart) BuildFarStrip(layout, "FarRoadAhead", aheadStart, _farRoadEnd);
+            float behindEnd = -(_segmentsBehind - 1) * _segmentLength;
+            if (_farRoadBehind < behindEnd) BuildFarStrip(layout, "FarRoadBehind", _farRoadBehind, behindEnd);
 
             Scroll();
         }
@@ -109,6 +120,26 @@ namespace Car3C.Presentation
             BuildGuardrail(root, railX, halfLength);
 
             return root;
+        }
+
+        private void BuildFarStrip(LaneLayout layout, string name, float startZ, float endZ)
+        {
+            Transform root = new GameObject(name).transform;
+            root.SetParent(transform, false);
+            root.localPosition = new Vector3(0f, -0.012f, 0f);
+
+            float length = endZ - startZ;
+            float centerZ = (startZ + endZ) * 0.5f;
+            float roadWidth = layout.RoadWidth;
+            CreateBlock(root, "Asphalt", _asphaltMaterial, new Vector3(0f, -SurfaceThickness * 0.5f, centerZ), new Vector3(roadWidth, SurfaceThickness, length));
+            float shoulderOffset = (roadWidth + _shoulderWidth) * 0.5f;
+            CreateBlock(root, "ShoulderLeft", _shoulderMaterial, new Vector3(-shoulderOffset, -SurfaceThickness * 0.5f - 0.02f, centerZ), new Vector3(_shoulderWidth, SurfaceThickness, length));
+            CreateBlock(root, "ShoulderRight", _shoulderMaterial, new Vector3(shoulderOffset, -SurfaceThickness * 0.5f - 0.02f, centerZ), new Vector3(_shoulderWidth, SurfaceThickness, length));
+            CreateBlock(root, "EdgeLineLeft", _lineMaterial, new Vector3(layout.GetBoundary(0) + LineWidth, LineHeight * 0.5f, centerZ), new Vector3(LineWidth, LineHeight, length));
+            CreateBlock(root, "EdgeLineRight", _lineMaterial, new Vector3(layout.GetBoundary(layout.LaneCount) - LineWidth, LineHeight * 0.5f, centerZ), new Vector3(LineWidth, LineHeight, length));
+            float railX = roadWidth * 0.5f + _guardrailOffset;
+            CreateBlock(root, "GuardrailBeam", _guardrailMaterial, new Vector3(-railX, 0.72f, centerZ), new Vector3(0.08f, 0.3f, length));
+            CreateBlock(root, "GuardrailBeam", _guardrailMaterial, new Vector3(railX, 0.72f, centerZ), new Vector3(0.08f, 0.3f, length));
         }
 
         /// <summary>가드레일: 일정 간격의 기둥 위에 철제 빔 두 줄. 구간 길이만큼 이어져 끊김 없이 보인다.</summary>

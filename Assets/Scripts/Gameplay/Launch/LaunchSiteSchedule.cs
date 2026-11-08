@@ -48,5 +48,15 @@ namespace Car3C.Gameplay.Launch
         {
             return siteZ <= _triggerAhead && siteZ >= -_visibleBehind;
         }
+
+        /// <summary>
+        /// 차가 가까이 왔을 때 발사되도록: 지금 속도로 secondsToLiftoff 뒤 발사장이 liftoffAhead(m) 앞에 오게 되는 순간 시작한다.
+        /// 시작 거리는 triggerAhead를 넘지 않는다(보이기 전에 시작하지 않음).
+        /// </summary>
+        public bool ShouldTriggerOnApproach(float siteZ, float speed, float secondsToLiftoff, float liftoffAhead)
+        {
+            float startAhead = Math.Min(_triggerAhead, liftoffAhead + Math.Max(0f, speed) * Math.Max(0f, secondsToLiftoff));
+            return siteZ <= startAhead && siteZ >= -_visibleBehind;
+        }
     }
 }

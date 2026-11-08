@@ -1,0 +1,15 @@
+Airplane Pack (Jan 2017) by Quaternius — 이 폴더에는 원본 팩에 License.txt가 없어(미러 기준) 같은 제작자의 표준 라이선스(아래, CC0)를 동봉함.
+출처: github.com/beep2bleep/FreeAssetsByKenneyNLandQuaternius / quaternius.com (모든 모델 CC0 공개)
+
+------------------------------------------------------
+LowPoly Models by @Quaternius
+Consider supporting me on Patreon, even $1 helps me a lot!
+
+https://www.patreon.com/quaternius
+-------------------------------------------------------
+
+License:
+CC0 1.0 Universal (CC0 1.0) 
+Public Domain Dedication
+https://creativecommons.org/publicdomain/zero/1.0/
+

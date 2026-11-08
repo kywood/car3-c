@@ -21,6 +21,7 @@ namespace Car3C.Presentation
         [SerializeField] private TMP_Text _popupText;
         [SerializeField] private Color _nearMissColor = new Color(1f, 0.85f, 0.2f);
         [SerializeField] private Color _crashColor = new Color(1f, 0.3f, 0.25f);
+        [SerializeField] private Color _boostColor = new Color(0.3f, 0.9f, 1f);
         [SerializeField] private float _popupDuration = 0.9f;
         [SerializeField] private float _popupPunchScale = 1.6f;
 
@@ -34,13 +35,22 @@ namespace Car3C.Presentation
             _simulation = simulation ?? throw new ArgumentNullException(nameof(simulation));
             _popup = new PopupAnimation(_popupDuration, _popupPunchScale, _popupDuration * 0.2f, _popupDuration * 0.35f);
             _simulation.Traffic.AddListener(this);
+            _simulation.BoostPadTriggered += OnBoostPad;
             ApplyPopup();
             Refresh();
         }
 
         private void OnDestroy()
         {
-            _simulation?.Traffic.RemoveListener(this);
+            if (_simulation == null) return;
+            _simulation.Traffic.RemoveListener(this);
+            _simulation.BoostPadTriggered -= OnBoostPad;
+        }
+
+        private void OnBoostPad(long padIndex)
+        {
+            _popupText.SetText("BOOST!");
+            ShowPopup(_boostColor);
         }
 
         private void LateUpdate()

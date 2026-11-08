@@ -23,6 +23,8 @@ namespace Car3C.Presentation.Launch
         [SerializeField] private float _visibleAhead = 900f;
         [SerializeField] private float _visibleBehind = 350f;
         [SerializeField] private bool _isAuthority = true;
+        [Tooltip("발사(이륙) 순간 발사장이 차 앞 몇 m에 오게 할지. 속도에 맞춰 카운트다운 시작 시점을 정한다")]
+        [SerializeField] private float _liftoffAhead = 80f;
 
         private SpeedController _speed;
         private LaunchSiteSchedule _schedule;
@@ -85,7 +87,8 @@ namespace Car3C.Presentation.Launch
                 _siteRoot.localPosition = position;
             }
 
-            if (_isAuthority && !_launchRequested && _schedule.ShouldTrigger(siteZ))
+            float secondsToLiftoff = _timeline.CountdownSeconds + _timeline.IgnitionSeconds;
+            if (_isAuthority && !_launchRequested && _schedule.ShouldTriggerOnApproach(siteZ, _speed.CurrentSpeed, secondsToLiftoff, _liftoffAhead))
             {
                 double startTime = Time.timeAsDouble;
                 BeginLaunch(startTime);

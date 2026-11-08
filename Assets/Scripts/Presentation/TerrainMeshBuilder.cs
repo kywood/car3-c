@@ -214,6 +214,147 @@ namespace Car3C.Presentation
             return uvs;
         }
 
+        /// <summary>
+        /// 부드러운 산봉우리: 정점을 공유하는 고리 격자라 매끈하게 음영지고, 둘레를 따라 굵은·잔 능선이 뻗는다.
+        /// 오목한 경사(아래가 넓게 퍼짐)로 실제 산 모양에 가깝게 만든다.
+        /// </summary>
+        public static Mesh BuildSmoothPeak(float radius, float height, int segments, int rings, int seed)
+        {
+            if (segments < 8 || rings < 4) throw new ArgumentException("분할 수가 너무 적습니다.");
+            var vertices = new List<Vector3>((rings + 1) * segments + 1);
+            var triangles = new List<int>(rings * segments * 6);
+
+            // 바닥이 약간 타원(씨앗별 비율·방향)이라 원뿔처럼 보이지 않는다.
+            float stretch = 1.15f + 0.35f * Noise(seed, 91, 0);
+            float stretchAngle = Noise(seed, 92, 0) * Mathf.PI;
+            float topY = 0f;
+            for (int r = 0; r <= rings; ++r)
+            {
+                float t = r / (float)rings;            // 0 = 바닥 둘레, 1 = 꼭대기
+                for (int s = 0; s < segments; ++s)
+                {
+                    float a = s / (float)segments;
+                    // 능선: 둘레 방향으로 반복되는 굵은 굴곡(4칸) + 잔 굴곡(11칸).
+                    float spur = PeriodicNoise(seed, a * 4f, 4) * 0.6f + PeriodicNoise(seed + 31, a * 11f, 11) * 0.4f;
+                    float rough = PeriodicNoise(seed + 7, a * 23f, 23);
+                    float d = 1f - t;                  // 꼭대기에서의 거리 비율
+                    float angle = a * Mathf.PI * 2f;
+                    float ellipse = 1f + (stretch - 1f) * Mathf.Abs(Mathf.Cos(angle - stretchAngle));
+                    float rr = radius * d * (0.7f + 0.6f * spur) * ellipse;
+                    // 꼭대기는 둥글고(1 - d²), 아래는 넓게 퍼지는(^1.6) 단면.
+                    float profile = Mathf.Pow(1f - d * d, 1.6f);
+                    float y = r == 0 ? 0f : height * profile * (0.85f + 0.3f * spur * d + 0.15f) + (rough - 0.5f) * height * 0.05f * d;
+                    y = Mathf.Max(0f, y);
+                    if (r == rings) topY += y / segments;
+                    vertices.Add(new Vector3(Mathf.Cos(angle) * rr, y, Mathf.Sin(angle) * rr));
+                }
+            }
+            int apex = vertices.Count;
+            vertices.Add(new Vector3(0f, topY + height * 0.01f, 0f));
+
+            for (int r = 0; r < rings; ++r)
+            {
+                for (int s = 0; s < segments; ++s)
+                {
+                    int next = (s + 1) % segments;
+                    int a0 = r * segments + s, a1 = r * segments + next;
+                    if (r + 1 == rings)
+                    {
+                        triangles.Add(a0); triangles.Add(apex); triangles.Add(a1);
+                        continue;
+                    }
+                    int b0 = (r + 1) * segments + s, b1 = (r + 1) * segments + next;
+                    triangles.Add(a0); triangles.Add(b0); triangles.Add(a1);
+                    triangles.Add(a1); triangles.Add(b0); triangles.Add(b1);
+                }
+            }
+
+            Mesh mesh = new Mesh { name = "SmoothPeak" };
+            mesh.SetVertices(vertices);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateNormals();
+            // 면이 바깥(위)을 보게: 중간 고리 정점 법선이 바깥쪽이 아니면 감김 방향을 뒤집는다.
+            int probe = (rings / 2) * segments;
+            Vector3 outward = new Vector3(vertices[probe].x, 0f, vertices[probe].z);
+            if (Vector3.Dot(mesh.normals[probe], outward) < 0f)
+            {
+                for (int i = 0; i < triangles.Count; i += 3) (triangles[i + 1], triangles[i + 2]) = (triangles[i + 2], triangles[i + 1]);
+                mesh.SetTriangles(triangles, 0);
+                mesh.RecalculateNormals();
+            }
+            // UV: 정점 법선이 가리키는 축 평면으로 투영(UvTileSize 12m 반복과 같은 크기).
+            var normals = mesh.normals;
+            var uvs = new Vector2[vertices.Count];
+            for (int i = 0; i < vertices.Count; ++i)
+            {
+                Vector3 n = normals[i], p = vertices[i];
+                float ax = Mathf.Abs(n.x), ay = Mathf.Abs(n.y), az = Mathf.Abs(n.z);
+                Vector2 uv = ay >= ax && ay >= az ? new Vector2(p.x, p.z) : ax >= az ? new Vector2(p.z, p.y) : new Vector2(p.x, p.y);
+                uvs[i] = uv / 12f;
+            }
+            mesh.uv = uvs;
+            mesh.RecalculateTangents();
+            mesh.RecalculateBounds();
+            return mesh;
+        }
+
+        /// <summary>
+        /// 삼각형마다 정점이 따로 있는 메시의 법선을 부드럽게 한다. 같은 위치의 정점끼리, 면 각도가 maxAngle 이하인 면만 평균하여
+        /// 완만한 경사는 매끈하게, 터널 입구 같은 날카로운 모서리는 그대로 둔다.
+        /// </summary>
+        public static void SmoothNormals(Mesh mesh, float maxAngle)
+        {
+            Vector3[] vertices = mesh.vertices;
+            int[] triangles = mesh.triangles;
+            var faceNormals = new Vector3[triangles.Length / 3];
+            for (int f = 0; f < faceNormals.Length; ++f)
+            {
+                Vector3 a = vertices[triangles[f * 3]], b = vertices[triangles[f * 3 + 1]], c = vertices[triangles[f * 3 + 2]];
+                faceNormals[f] = Vector3.Cross(b - a, c - a).normalized;
+            }
+
+            var vertexFace = new int[vertices.Length];
+            for (int i = 0; i < triangles.Length; ++i) vertexFace[triangles[i]] = i / 3;
+
+            var groups = new Dictionary<Vector3Int, List<int>>();
+            for (int i = 0; i < vertices.Length; ++i)
+            {
+                Vector3Int key = Vector3Int.RoundToInt(vertices[i] * 100f);
+                if (!groups.TryGetValue(key, out var list)) groups.Add(key, list = new List<int>(6));
+                list.Add(i);
+            }
+
+            float minDot = Mathf.Cos(maxAngle * Mathf.Deg2Rad);
+            var normals = new Vector3[vertices.Length];
+            foreach (var list in groups.Values)
+            {
+                foreach (int i in list)
+                {
+                    Vector3 own = faceNormals[vertexFace[i]];
+                    Vector3 sum = Vector3.zero;
+                    foreach (int j in list)
+                    {
+                        Vector3 other = faceNormals[vertexFace[j]];
+                        if (Vector3.Dot(own, other) >= minDot) sum += other;
+                    }
+                    normals[i] = sum.sqrMagnitude > 1e-8f ? sum.normalized : own;
+                }
+            }
+            mesh.normals = normals;
+            mesh.RecalculateTangents();
+        }
+
+        /// <summary>period 칸마다 반복되는 1차원 부드러운 노이즈(0~1).</summary>
+        private static float PeriodicNoise(int seed, float x, int period)
+        {
+            int i0 = Mathf.FloorToInt(x);
+            float f = x - i0;
+            float u = f * f * (3f - 2f * f);
+            int a = ((i0 % period) + period) % period;
+            int b = (a + 1) % period;
+            return Mathf.Lerp(Noise(seed, a, 0), Noise(seed, b, 0), u);
+        }
+
         private static float Noise(int seed, int x, int y)
         {
             unchecked

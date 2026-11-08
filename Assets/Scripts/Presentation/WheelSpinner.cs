@@ -19,6 +19,9 @@ namespace Car3C.Presentation
             public float Radius;
         }
 
+        [Tooltip("한 프레임에 보이는 최대 회전각. 크면 빠른 속도에서 바퀴가 멈추거나 거꾸로 도는 것처럼 보인다(마차 바퀴 효과).")]
+        [SerializeField] private float _maxDegreesPerFrame = 24f;
+
         private readonly List<Wheel> _wheels = new List<Wheel>(4);
         private float _angle;
 
@@ -48,7 +51,9 @@ namespace Car3C.Presentation
         {
             if (_wheels.Count == 0 || meters == 0f) return;
 
-            _angle = Mathf.Repeat(_angle + meters / _wheels[0].Radius * Mathf.Rad2Deg, 360f);
+            float step = meters / _wheels[0].Radius * Mathf.Rad2Deg;
+            step = Mathf.Clamp(step, -_maxDegreesPerFrame, _maxDegreesPerFrame);
+            _angle = Mathf.Repeat(_angle + step, 360f);
             for (int i = 0; i < _wheels.Count; ++i)
             {
                 Wheel wheel = _wheels[i];
