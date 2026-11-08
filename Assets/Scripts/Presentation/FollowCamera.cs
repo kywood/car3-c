@@ -1,6 +1,7 @@
 using System;
 using Car3C.Gameplay;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Car3C.Presentation
 {
@@ -30,6 +31,8 @@ namespace Car3C.Presentation
         [SerializeField] private Transform _cockpitAnchor;
         [Tooltip("운전석 시점에서만 보이는 실내(계기판·운전대·기둥)")]
         [SerializeField] private GameObject _cockpitInterior;
+        [Tooltip("운전석 시점에서 숨길 내 차 외형(그림자만 남긴다)")]
+        [SerializeField] private Renderer[] _hideInCockpit = Array.Empty<Renderer>();
         [SerializeField] private float _cockpitFieldOfView = 66f;
         [SerializeField] private float _cockpitExtraFieldOfView = 8f;
         [SerializeField] private float _cockpitNearClip = 0.05f;
@@ -101,6 +104,11 @@ namespace Car3C.Presentation
             bool inside = _cockpitBlend > 0.5f;
             if (_cockpitInterior != null && _cockpitInterior.activeSelf != (_cockpitBlend > 0f)) _cockpitInterior.SetActive(_cockpitBlend > 0f);
             if (_camera != null) _camera.nearClipPlane = inside ? _cockpitNearClip : _chaseNearClip;
+
+            // 운전석에서는 내 차 외형을 그리지 않고 바닥 그림자만 남긴다.
+            ShadowCastingMode mode = inside ? ShadowCastingMode.ShadowsOnly : ShadowCastingMode.On;
+            for (int i = 0; i < _hideInCockpit.Length; ++i)
+                if (_hideInCockpit[i] != null && _hideInCockpit[i].shadowCastingMode != mode) _hideInCockpit[i].shadowCastingMode = mode;
         }
 
         private void ApplyPose()

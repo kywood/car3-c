@@ -57,7 +57,9 @@
 
 ## 외부 에셋
 - 외부 무료 에셋은 `Assets/ThirdParty/<제작자>/`에 두고 원본 License.txt를 함께 보관하며, `Assets/ThirdParty/CREDITS.md`에 출처·라이선스를 기록한다.
-- 라이선스가 확인된 것(CC0 등)만 사용한다. 현재: Quaternius 로우폴리 팩(CC0).
+- 라이선스가 확인된 것(CC0 등)만 사용한다. 현재: Quaternius 로우폴리 팩(CC0), Poly Haven(CC0), Kenney Particle Pack(CC0, 차량 물보라·눈보라).
+- 도로: 움직이는 구간(`RoadView` 20m × 10) 너머 앞뒤는 고정 단순 도로(`FarRoadAhead`/`FarRoadBehind`)로 이어 비어 보이지 않게 한다.
+- UI는 가로 전용이므로 CanvasScaler를 높이 기준(match 1)으로 맞춘다.
 - 배경은 `SceneryView`가 40m 구간 단위로 풀링·스크롤하며, 배치 지점과 후보 프리팹은 씬의 Scenery 오브젝트에서 조정한다.
 - 원경 산은 FarScenery(160m 구간), 터널은 Scenery의 Tunnel 설정(`TunnelSchedule`)으로 반복 배치한다.
 - 차량 모델은 `Assets/Vehicles`(car3에서 GUID 유지 복사, 출처는 `Vehicles/SOURCES.md`). Cybercab은 출처 미확인.

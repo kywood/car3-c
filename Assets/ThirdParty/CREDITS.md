@@ -18,3 +18,8 @@ CC0 does not require attribution; credit is kept here voluntarily.
 | PolyHaven/Textures | asphalt_02, concrete_pavement, concrete_floor_02, aerial_grass_rock, concrete_wall_003, snow_02 (1k diffuse + normal GL) |
 
 All Poly Haven assets are CC0 (public domain); downloaded via api.polyhaven.com.
+
+## Kenney (kenney.nl) — CC0 1.0
+| Folder | Assets |
+|---|---|
+| Kenney/ParticlePack | Particle Pack 1.1: smoke_04, dirt_02 (차량 물보라·눈보라). 원본 License.txt 동봉. 받은 곳: github.com/Calinou/kenney-particle-pack (공식 팩 미러) |
