@@ -28,6 +28,10 @@ namespace Car3C.Bootstrap
         [SerializeField] private RailTrainView _railTrain;
         [Tooltip("선택: 맵 일부에만 있는 고가 경전철 노선")]
         [SerializeField] private RailLineView _railLine;
+        [Tooltip("선택: 다른 구간의 철도 노선들(각 노선의 Zone 구간에 놓인다)")]
+        [SerializeField] private RailLineView[] _extraRailLines = Array.Empty<RailLineView>();
+        [Tooltip("선택: 하늘을 지나가는 비행기")]
+        [SerializeField] private AirplaneView _airplane;
         [SerializeField] private SceneryView _farScenery;
         [SerializeField] private EnvironmentView _environmentView;
         [SerializeField] private EnvironmentButtonsView _environmentButtons;
@@ -82,11 +86,9 @@ namespace Car3C.Bootstrap
             _environmentButtons.Initialize(_environment);
 
             if (_playerWheels != null) _vehicle.WheelsRolled += _playerWheels.Spin;
-            if (_railLine != null && _scenery.Zones != null)
-            {
-                var (harborChunk, _) = _scenery.Zones.FindZone(MapZone.Harbor);
-                if (harborChunk >= 0) _railLine.Initialize(_simulation.Speed, harborChunk * (double)_scenery.Zones.ChunkLength, _scenery.Zones.CycleDistance);
-            }
+            InitializeRailLine(_railLine);
+            for (int i = 0; i < _extraRailLines.Length; ++i) InitializeRailLine(_extraRailLines[i]);
+            if (_airplane != null) _airplane.Initialize(new SkyTrafficSchedule(System.Environment.TickCount));
 
             if (_launchSite != null)
             {
@@ -95,6 +97,13 @@ namespace Car3C.Bootstrap
                 if (launchCenter >= 0d) _launchSite.Initialize(_simulation.Speed, launchCenter, zones.CycleDistance);
                 else _launchSite.Initialize(_simulation.Speed);
             }
+        }
+
+        private void InitializeRailLine(RailLineView line)
+        {
+            if (line == null || _scenery.Zones == null) return;
+            var (chunk, _) = _scenery.Zones.FindZone(line.Zone);
+            if (chunk >= 0) line.Initialize(_simulation.Speed, chunk * (double)_scenery.Zones.ChunkLength, _scenery.Zones.CycleDistance);
         }
 
         private void OnDestroy()

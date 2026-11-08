@@ -5,7 +5,8 @@
 | Quaternius/Buildings | Buildings Pack (Jan 2019) | Quaternius (quaternius.com) | CC0 1.0 |
 | Quaternius/Street | Modular Street Pack (Mar 2018) | Quaternius | CC0 1.0 |
 | Quaternius/Ships | Ship Pack (Feb 2018) | Quaternius | CC0 1.0 |
-| Quaternius/Trains | Train Pack (Apr 2019) | Quaternius | CC0 1.0 |
+| Quaternius/Trains | Train Pack (Apr 2019): HighSpeed_Wagon, HighSpeed_Front, RailwayTrack_Straight | Quaternius | CC0 1.0 |
+| Quaternius/Airplanes | Airplane Pack (Jan 2017): Commercial Airplane | Quaternius | CC0 1.0 (미러에 License.txt 없음 — 제작자 표준 CC0 라이선스 동봉) |
 
 Downloaded from the public mirror github.com/beep2bleep/FreeAssetsByKenneyNLandQuaternius.
 Each pack's original License.txt (CC0 1.0 Universal) is kept next to the models.

@@ -61,7 +61,7 @@
 - 도로: 움직이는 구간(`RoadView` 20m × 10) 너머 앞뒤는 고정 단순 도로(`FarRoadAhead`/`FarRoadBehind`)로 이어 비어 보이지 않게 한다.
 - UI는 가로 전용이므로 CanvasScaler를 높이 기준(match 1)으로 맞춘다.
 - 배경은 `SceneryView`가 40m 구간 단위로 풀링·스크롤하며, 배치 지점과 후보 프리팹은 씬의 Scenery 오브젝트에서 조정한다.
-- 원경 산은 FarScenery(160m 구간), 터널은 Scenery의 Tunnel 설정(`TunnelSchedule`)으로 반복 배치한다.
+- 원경 산은 FarScenery(160m 구간), 터널은 Scenery의 Tunnel 설정(`TunnelSchedule`)으로 반복 배치한다. 산 메시는 `TerrainMeshBuilder.BuildSmoothPeak`(정점 공유·둥근 꼭대기), 터널 산은 `SmoothNormals`(55° 이하만 부드럽게).
 - 차량 모델은 `Assets/Vehicles`(car3에서 GUID 유지 복사, 출처는 `Vehicles/SOURCES.md`). Cybercab은 출처 미확인.
 
 ## 맵 구간 (맵 툴 도입 전 임시)
@@ -74,6 +74,9 @@
 ## 맵 이벤트·기능
 - 우주 발사장: `RocketLaunchSequence`(순수, 시작 시각만으로 상태 계산 → Photon 동기화는 시작 시각 하나), `LaunchSiteSchedule`, `LaunchSiteController`(배치·이벤트 시작, `LaunchRequested`/`BeginLaunch`로 네트워크 확장), `RocketLaunchView`/`LaunchCountdownView`/`LaunchAudio`(연출·사운드 훅). 카메라 흔들림은 기본 꺼짐.
 - 고가 경전철은 항구 구간에만: `RailRoute`(곡선 노선) + `RailLineView`.
+- 고속철도: 평지·발사장 구간 왼쪽(x -26) 지상 선로, `RailLineView`(Zone=Plain, `_departAhead`)로 노선이 230m 앞에 오면 마주 오는 열차가 한 번 스쳐 지나간다.
+- 우주 발사: `LaunchSiteSchedule.ShouldTriggerOnApproach` — 현재 속도로 이륙 순간 발사장이 약 80m 앞에 오도록 카운트다운 시작.
+- 비행기: `SkyTrafficSchedule`(순수, 씨앗·시간으로 결정) + `AirplaneView`. 카메라가 지평선 위 약 10°까지만 보므로 330~420m 앞, 고도 55~90m로 지나간다(카메라 원거리 900m).
 - 점프: `JumpMotion`(순수), Space/W/↑, 위로 스와이프, JUMP 버튼. 공중에서는 차량 위를 넘어가며 근접 추월로 계산.
 - 충돌한 교통 차량은 돌며 깜빡이다 `CrashRemoveSeconds` 뒤 사라진다.
 - 시점: `ViewModeController`(순수, 추적 ↔ 운전석), VIEW 버튼·C/V 키. `FollowCamera`가 차량 Visual 아래 `CockpitAnchor`로 부드럽게 이동하고 운전석에서만 `CockpitInterior`(독자 디자인 계기판·운전대·기둥)를 켠다.

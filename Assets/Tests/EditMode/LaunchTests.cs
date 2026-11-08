@@ -83,5 +83,20 @@ namespace Car3C.Tests.EditMode
             Assert.AreEqual(1L, schedule.GetSiteIndex(1400));
             Assert.AreEqual(2600f, schedule.GetSiteZ(1, 1400), 1e-3f);
         }
+
+        [Test]
+        public void ApproachTrigger_StartsSoLiftoffHappensNearThePlayer()
+        {
+            var schedule = new LaunchSiteSchedule(firstDistance: 1000, repeatDistance: 3000, triggerAhead: 560f, visibleAhead: 560f, visibleBehind: 300f);
+            const float speed = 30f, lead = 7f, liftoffAhead = 80f;
+            // 시작 지점 = 80 + 30 × 7 = 290m 앞.
+            Assert.IsFalse(schedule.ShouldTriggerOnApproach(300f, speed, lead, liftoffAhead));
+            Assert.IsTrue(schedule.ShouldTriggerOnApproach(289f, speed, lead, liftoffAhead));
+            // 그대로 달리면 이륙 순간 발사장은 약 80m 앞.
+            Assert.AreEqual(liftoffAhead, 290f - speed * lead, 1e-3f);
+            // 아주 빠르면 보이는 거리(560m)를 넘지 않는다.
+            Assert.IsFalse(schedule.ShouldTriggerOnApproach(600f, 200f, lead, liftoffAhead));
+            Assert.IsTrue(schedule.ShouldTriggerOnApproach(550f, 200f, lead, liftoffAhead));
+        }
     }
 }
